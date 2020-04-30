@@ -1,0 +1,11 @@
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\TestingSystemDatabaseLibrary.dll
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\TestingSystemDatabaseLibrary.pdb
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\obj\Debug\TestingSystemDatabaseLibrary.csprojAssemblyReference.cache
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\obj\Debug\TestingSystemDatabaseLibrary.dll
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\obj\Debug\TestingSystemDatabaseLibrary.pdb
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\TestingSystemDatabaseLibrary.dll.config
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\EntityFramework.dll
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\EntityFramework.xml
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pavlo\C#\Курсова\TestingSystemDatabaseLibrary\TestingSystemDatabaseLibrary\obj\Debug\TestingSystemDatabaseLibrary.csproj.CopyComplete

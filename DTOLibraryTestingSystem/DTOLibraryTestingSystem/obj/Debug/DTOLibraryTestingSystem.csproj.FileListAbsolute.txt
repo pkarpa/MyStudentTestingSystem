@@ -1,0 +1,5 @@
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\bin\Debug\DTOLibraryTestingSystem.dll
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\bin\Debug\DTOLibraryTestingSystem.pdb
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.csprojAssemblyReference.cache
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.dll
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.pdb
