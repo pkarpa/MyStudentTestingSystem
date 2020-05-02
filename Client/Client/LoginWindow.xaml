@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="LoginWindow"  MinHeight="399" MaxHeight="399" MinWidth="420" Width="420"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Height="371.8">
 
-    <Grid Background="LightCyan">
+    <Grid Background="LightCyan" Margin="0,0,-0.4,-2.4">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width ="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderThickness="2">
+        <Border BorderThickness="2" Grid.ColumnSpan="2" Margin="0,0,-0.4,2">
 
             <Border.BorderBrush>
                 <DrawingBrush Viewport="0,0,8,8" ViewportUnits="Absolute" TileMode="Tile">
@@ -33,7 +33,7 @@
                 </DrawingBrush>
             </Border.BorderBrush>
 
-            <StackPanel Orientation="Vertical"  Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" Height="372" VerticalAlignment="Top">
+            <StackPanel Orientation="Vertical"  Margin="0.4,0.4,0,8.2" RenderTransformOrigin="0.5,0.5">
                 <TextBlock Foreground="Blue" FontSize="30" Text="TestingSystem" FontStretch="ExtraExpanded"  Margin="70,30,57,20" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Background="{x:Null}" Width="280" RenderTransformOrigin="0.5,0.5" FontFamily="Verdana">
                     <TextBlock.RenderTransform>
                         <TransformGroup>
@@ -45,55 +45,11 @@
                     </TextBlock.RenderTransform>
                 </TextBlock>
 
-                <Button x:Name="ChangeUserButton" Background="Blue" FontSize="10" Foreground="White" Content="As Admin" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="190" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,10,90,20" Click="ChangeUserButton_Click">
-                    <Button.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="8"/>
-                        </Style>
-                    </Button.Resources>
-                </Button>
+                <Label x:Name="NameLabel" Content="Name:"  FontSize="14" Foreground="DarkCyan" Width="50" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <TextBox x:Name="LoginBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190" Text="admintest@gmail.com"/>
 
-
-                <TextBox x:Name="LoginBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190" Text="admintest@gmail.com">
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="8"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-                <TextBlock IsHitTestVisible="False" FontSize="14" Text="Login" Padding="6,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-115,-75,0,0" Foreground="DarkGray">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=LoginBox}" Value="">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-
-                <TextBox x:Name="PasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190" Text="Admin2018">
-                    <TextBox.Resources>
-                        <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="8"/>
-                        </Style>
-                    </TextBox.Resources>
-                </TextBox>
-
-                <TextBlock IsHitTestVisible="False" FontSize="14" Text="Password" Padding="6,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-90,-75,0,0" Foreground="DarkGray">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Text, ElementName=PasswordBox}" Value="">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
+                <Label x:Name="PasswordLabel" Content="Password:"  FontSize="14" Foreground="DarkCyan" Width="76" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <PasswordBox x:Name="PasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,40" VerticalAlignment="Center" Width="190" Password="Admin2018"/>
 
                 <Button x:Name="LoginButton" Background="Blue" FontSize="14" Foreground="White" Content="Log in" HorizontalAlignment="Center" VerticalAlignment="Center" Height="28" Width="190" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,10,90,20" Click="LoginButton_Click">
                     <Button.Resources>

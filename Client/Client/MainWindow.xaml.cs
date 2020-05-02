@@ -30,7 +30,7 @@ namespace Client
             if (client.IsAdmin) // в залежості від користувача який входить в систему на головному меню відображаються різні кнопки
             {
                 Button myAccount = new Button() { Name = "MyAccountButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "My Account", Padding = new Thickness(25, 0, 25, 7) };
-                myAccount.Click += MyAccountButton_Click;
+                myAccount.Click += MyAdminAccountButton_Click;
                 Button studentsButton = new Button() { Name = "StudentsButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Students", Padding = new Thickness(25, 0, 25, 7) };
                 studentsButton.Click += StudentsButton_Click;
                 Button groupsButton = new Button() { Name = "GroupsButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Groups", Padding = new Thickness(25, 0, 25, 7) };
@@ -50,16 +50,18 @@ namespace Client
             else
             {
                 Button myStudentAccount = new Button() { Name = "MyStudentAccountButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "My Account", Padding = new Thickness(25, 0, 25, 7) };
+                myStudentAccount.Click += MyStudentAccountButton_Click;
                 Button testsButton = new Button() { Name = "testsButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Tests", Padding = new Thickness(25, 0, 25, 7) };
                 Button logOutButton = new Button() { Name = "LogOutButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Log out", Padding = new Thickness(25, 0, 25, 7) };
                 buttonsStackPanel.Children.Add(myStudentAccount);
                 buttonsStackPanel.Children.Add(testsButton);
                 buttonsStackPanel.Children.Add(logOutButton);
+                logOutButton.Click += LogOutButton_Click;
             }
         }
 
         // кнопка для переходу на сторінку профілю адміністратора
-        private void MyAccountButton_Click(object sender, RoutedEventArgs e)
+        private void MyAdminAccountButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new AdminAccount(client);
         }
@@ -74,6 +76,11 @@ namespace Client
         private void GroupsButton_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Content = new AdminGroups(client);
+        }
+
+        private void MyStudentAccountButton_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Content = new StudentAccount(client);
         }
 
         // кнопка виходу з системи

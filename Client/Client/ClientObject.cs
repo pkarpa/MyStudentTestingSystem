@@ -26,7 +26,7 @@ namespace Client
 
         public void Connect()
         {
-            client = new TcpClient(); 
+            client = new TcpClient();
 
             try
             {
@@ -77,6 +77,7 @@ namespace Client
             {
                 MessageBox.Show("Lose Connection!");
                 Disconnect();
+                Environment.Exit(0);
             }
 
             return message; // Повертаємо отримане повідомлення
@@ -85,9 +86,29 @@ namespace Client
         // Метод який приймає об'єкти з серверної частини
         public Object RecieveObject()
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            Object obj = formatter.Deserialize(stream);
+            Object obj = null;
+            try
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                obj = formatter.Deserialize(stream);
+            }
+            catch
+            {
+                MessageBox.Show("Lose Connection!");
+                Disconnect();
+                Environment.Exit(0);
+            }
             return obj;
+        }
+
+        public bool IsConnected()
+        {
+            bool isConnect = false;
+            if (client.Connected == true)
+            {
+                isConnect = true;
+            }
+            return isConnect;
         }
 
         // Закриває з'єднання
@@ -97,7 +118,7 @@ namespace Client
                 stream.Close();
             if (client != null)
                 client.Close();
-            Environment.Exit(0);
+            //Environment.Exit(0);
         }
 
         // Реєстрація користувача, приймає об'єкт який може бути DTOAdministrator або DTOStudent
@@ -107,7 +128,7 @@ namespace Client
 
             if (obj is DTOAdministrator) // Перевіряємо чи об'єкт це DTOAdministrator
             {
-                message = "AdminRegistration:"; 
+                message = "AdminRegistration:";
                 SendMessage(message); // надсилаємо повідомлення на серверну частину про реєстрацію адміністратора 
                 SendObject(obj); // надсилаємо об'єкт адміністратора з даними  на серверну частину
             }
@@ -117,7 +138,7 @@ namespace Client
                 SendMessage(message); // надсилаємо повідомлення на серверну частину про реєстрацію студента 
                 SendObject(obj); // надсилаємо об'єкт студента з даними  на серверну частину
             }
-            
+
             string answer = RecieveMessages(); // Получаємо відповідь з сервера
 
             return answer;
@@ -125,22 +146,23 @@ namespace Client
 
         // Метод який виконує вхід певного користувача в систему
         // Приймає ідентифікатор, який вказує чи є користувач адміністратором, його логін та пароль
-        public string LogIn(bool isAdm, string login, string password)
-        { 
-            IsAdmin = isAdm;
-            string message = "LogIn:" + isAdm + " " + login + " " + password;
+        public string LogIn(string login, string password)
+        {
+            string message = "LogIn:" + login + " " + password;
             SendMessage(message);  // надсилаємо повідомлення на серверну частину про вхід користувача з даними  
             string[] answer = RecieveMessages().Split(':'); // приймаємо відповідь з сервера чи існує клієнт з такими даними 
             if (answer.Length > 1)
             {
-                id = int.Parse(answer[0]);// получаємо id клієнта
+                string[] el = answer[0].Split();
+                id = int.Parse(el[0]);// получаємо id клієнта
+                IsAdmin = bool.Parse(el[1]); // чи це адмін
                 return answer[1]; // повертаємо відповідь
             }
             else
             {
                 return answer[0];
             }
-                
+
         }
 
         //Метод зміни імені адміністратора, приймає нове ім'я
@@ -175,11 +197,11 @@ namespace Client
 
         // Метод який повертає групи студентів 
         public List<DTOGroup> GetGroups()
-        {   
+        {
             string message = "GetGroups:";
             SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
             List<DTOGroup> groups = (List<DTOGroup>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
-            return groups; 
+            return groups;
         }
 
         // Метод який повертає групи студентів для конкретного адміністратора
@@ -213,7 +235,7 @@ namespace Client
             {
                 students = obj as List<DTOStudent>; // приводимо до потрібного типу
             }
-            
+
             return students;
         }
 
@@ -247,6 +269,7 @@ namespace Client
         {
             string message = "LogOut:";
             SendMessage(message);
+            this.Disconnect();
         }
 
         // Метод для створення нової групи студентів, приймає назву групи
@@ -265,13 +288,28 @@ namespace Client
             string message = "InfoAboutAdmin:";
             SendMessage(message + id); // надсилаємо повідомлення на серверну частину для того щоб отримати інформацію про адміністратора
             var obj = RecieveObject();  // приймаємо відповідь з сервера 
-            DTOAdministrator administrator = null; 
+            DTOAdministrator administrator = null;
             if (obj is DTOAdministrator) // перевіряємо чи це справді DTOAdministrator
             {
                 administrator = (DTOAdministrator)obj; // приводимо до потрібного типу
             }
-            
+
             return administrator;
+        }
+
+        // Метод який повертає інформацію про студента
+        public DTOStudent GetInfoAboutStudent()
+        {
+            string message = "InfoAboutStudent:";
+            SendMessage(message + id); // надсилаємо повідомлення на серверну частину для того щоб отримати інформацію про адміністратора
+            var obj = RecieveObject();  // приймаємо відповідь з сервера 
+            DTOStudent student = null;
+            if (obj is DTOStudent) // перевіряємо чи це справді DTOAdministrator
+            {
+                student = (DTOStudent)obj; // приводимо до потрібного типу
+            }
+
+            return student;
         }
     }
 }

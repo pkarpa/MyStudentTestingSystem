@@ -45,7 +45,7 @@ namespace TestingSystemServer
             try
             {
                 Stream = client.GetStream(); // потік для надсилання та приймання повідомлень
-                
+
                 while (true) // цикл для прийому вхідних повідомлень
                 {
                     string[] message = GetMessage().Split(':'); // отримуємо вхідне повідомлення та виділяємо назву методу яка міститься до :
@@ -66,7 +66,7 @@ namespace TestingSystemServer
                             break;
                         case "InfoAboutAdmin":
                             InfoAboutAdmin(message[1]);
-                            Console.WriteLine(this.ClientObjectId + ": InfoAboutAdmin"); 
+                            Console.WriteLine(this.ClientObjectId + ": InfoAboutAdmin");
                             break;
                         case "EditAdminName":
                             EditAdminName(message[1]);
@@ -108,9 +108,14 @@ namespace TestingSystemServer
                             DeleteStudentFromGroup(message[1]);
                             Console.WriteLine(this.ClientObjectId + ": DeleteStudentFromGroup");
                             break;
+                        case "InfoAboutStudent":
+                            InfoAboutStudent(message[1]);
+                            Console.WriteLine(this.ClientObjectId + ": InfoAboutStudent");
+                            break;
                         case "LogOut":
                             Console.WriteLine(this.ClientObjectId + ": LogOut");
-                            return;                           
+                            LogOut();
+                            return;
 
                     }
 
@@ -130,23 +135,85 @@ namespace TestingSystemServer
         // Метод для входу користувача в систему
         // Приймає стрічку, яка містить ідентифікатор, який визначає який користувач входить (студент/адмін), також стрічка містить логін та пароль користувача
         // Метод перевіряє чи існує користувач з даним логіном та паролем в базі, і надсилає відповідь клієнтській частині
+        //private void LogIn(string mess)
+        //{
+        //    string[] logEl = mess.Split();
+        //    isAdmin = bool.Parse(logEl[0]);
+        //    login = logEl[1];
+        //    password = logEl[2];
+
+        //    if (isAdmin)
+        //    {
+        //        using (var db = new TestingSystemDBContext())
+        //        {
+        //            if (db.Administrators.FirstOrDefault(a => a.Login == login) != null)
+        //            {
+        //                if (db.Administrators.FirstOrDefault(a => a.Password == password) != null)
+        //                {
+        //                    var admin = db.Administrators.FirstOrDefault(a => a.Password == password);
+        //                    SendMessage(admin.Id + ":succesfully");
+        //                }
+        //                else
+        //                {
+        //                    SendMessage("No user with this password");
+        //                }
+        //            }
+        //            else
+        //            {
+        //                SendMessage("No user with this login");
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        using (var db = new TestingSystemDBContext())
+        //        {
+        //            if (db.Students.FirstOrDefault(s => s.Login == login) != null)
+        //            {
+        //                if (db.Students.FirstOrDefault(a => a.Password == password) != null)
+        //                {
+        //                    var student = db.Students.FirstOrDefault(s => s.Password == password);
+        //                    SendMessage(student.StudentId + ":succesfully");
+        //                }
+        //                else
+        //                {
+        //                    SendMessage("No user with this password");
+        //                }
+        //            }
+        //            else
+        //            {
+        //                SendMessage("No user with this login");
+        //            }
+        //        }
+        //    }
+        //}
+
+
         private void LogIn(string mess)
         {
             string[] logEl = mess.Split();
-            isAdmin = bool.Parse(logEl[0]);
-            login = logEl[1];
-            password = logEl[2];
+            isAdmin = true;
+            login = logEl[0];
+            password = logEl[1];
 
-            if (isAdmin)
+            using (var db = new TestingSystemDBContext())
             {
-                using (var db = new TestingSystemDBContext())
+                if (db.Administrators.FirstOrDefault(a => a.Login == login) == null)
+                {
+                    if (db.Administrators.FirstOrDefault(a => a.Password == password) == null)
+                    {
+                        isAdmin = false;
+                    }
+                }
+
+                if (isAdmin)
                 {
                     if (db.Administrators.FirstOrDefault(a => a.Login == login) != null)
                     {
                         if (db.Administrators.FirstOrDefault(a => a.Password == password) != null)
                         {
                             var admin = db.Administrators.FirstOrDefault(a => a.Password == password);
-                            SendMessage(admin.Id + ":succesfully");
+                            SendMessage(admin.Id + " " + isAdmin + ":succesfully");
                         }
                         else
                         {
@@ -158,16 +225,14 @@ namespace TestingSystemServer
                         SendMessage("No user with this login");
                     }
                 }
-            }
-            else
-            {
-                using (var db = new TestingSystemDBContext())
+                else
                 {
                     if (db.Students.FirstOrDefault(s => s.Login == login) != null)
                     {
                         if (db.Students.FirstOrDefault(a => a.Password == password) != null)
                         {
-                            SendMessage("succesfully");
+                            var student = db.Students.FirstOrDefault(s => s.Password == password);
+                            SendMessage(student.StudentId + " " + isAdmin + ":succesfully");
                         }
                         else
                         {
@@ -180,6 +245,12 @@ namespace TestingSystemServer
                     }
                 }
             }
+        }
+
+        private void LogOut()
+        {
+            server.RemoveConnection(ClientObjectId);
+            this.Close();
         }
 
 
@@ -308,7 +379,7 @@ namespace TestingSystemServer
                         students.Add(dtoStudent); // Додаємо студента до списку 
                     }
                 }
-                
+
                 SendObject(students); // Надсилаємо список студентів на клієнтську частину
             }
         }
@@ -344,7 +415,7 @@ namespace TestingSystemServer
             using (var db = new TestingSystemDBContext())
             {
                 var admin = db.Administrators.FirstOrDefault(a => a.Id == adminId); // Отримуємо адміністратора з бази по id
-                List<int> groupsId = new List<int> (); // список груп, які створив цей адміністратор
+                List<int> groupsId = new List<int>(); // список груп, які створив цей адміністратор
                 List<int> subjectsId = new List<int>(); // список предметів, які створив цей адміністратор
                 if (admin.Groups.Count != 0)
                 {
@@ -353,15 +424,35 @@ namespace TestingSystemServer
                         groupsId.Add(item.GroupId);
                     }
                 }
-                if(admin.Subjects.Count != 0)
-                { 
+                if (admin.Subjects.Count != 0)
+                {
                     foreach (var item in admin.Subjects)
                     {
                         groupsId.Add(item.SubjectId);
                     }
-                }             
+                }
                 DTOAdministrator administrator = new DTOAdministrator { Id = admin.Id, Name = admin.Name, Login = admin.Login, Password = admin.Password, GroupsId = groupsId, SubjectsId = subjectsId }; // створення об'єкта адміністратора для надсилання 
                 SendObject(administrator); // надсилання об'єкта адміністратора на клієнтську частину
+            }
+        }
+
+        // Метод який повертає інформацію про певного студента
+        private void InfoAboutStudent(string mess)
+        {
+            int studentId = int.Parse(mess); // отримуємо id студента з повідомлення
+            using (var db = new TestingSystemDBContext())
+            {
+                var student = db.Students.FirstOrDefault(s => s.StudentId == studentId); // Отримуємо студента з бази по id
+                List<int> testSessionsId = new List<int>(); // список тестових сесій, які проходив цей студент
+                if (student.TestSessions.Count != 0)
+                {
+                    foreach (var item in student.TestSessions)
+                    {
+                        testSessionsId.Add(item.TestSessionId);
+                    }
+                }
+                DTOStudent dtoStudent = new DTOStudent { StudentId = student.StudentId, Name = student.Name, SurName = student.SurName, Login = student.Login, Password = student.Password, GroupId = student.Group.GroupId, GroupName = student.Group.GroupName, TestSessionsId = testSessionsId }; // створення об'єкта студента для надсилання 
+                SendObject(dtoStudent); // надсилання об'єкта студента на клієнтську частину
             }
         }
 
@@ -488,13 +579,13 @@ namespace TestingSystemServer
                     db.SaveChanges();
                     SendMessage("succesfully");
                 }
-                else 
+                else
                 {
                     SendMessage("Exist admin with this password");
                 }
             }
         }
-           
+
         // Метод який повертає групи студентів
         private void GetGroups()
         {
@@ -517,7 +608,7 @@ namespace TestingSystemServer
                     DTOGroup group = new DTOGroup { GroupId = item.GroupId, AdminId = item.Admin.Id, GroupName = item.GroupName, StudentsId = studentsId, TestsId = testsId }; // Об'єкт групи для передавання на клієнтську частину
                     dtoGroups.Add(group); // додаємо елемент до списку
                 }
-                
+
                 SendObject(dtoGroups); // відправляємо об'єкт клієнту
             }
 

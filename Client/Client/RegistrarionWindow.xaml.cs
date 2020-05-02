@@ -46,18 +46,20 @@ namespace Client
                 isAdmin = true;
                 this.ChangeRegistrationButton.Content = "New Student";
                 this.SurNameBox.Visibility = Visibility.Collapsed;
-                this.SurNameBlock.Visibility = Visibility.Collapsed;
+                this.SurNameLabel.Visibility = Visibility.Collapsed;
                 this.GroupNameComboBox.Visibility = Visibility.Collapsed;
-                this.GroupNameBlock.Visibility = Visibility.Collapsed;
+                this.GroupLabel.Visibility = Visibility.Collapsed;
+                this.MinHeight = 490;
             }
             else
             {
                 isAdmin = false;
                 this.ChangeRegistrationButton.Content = "New Admin";
                 this.SurNameBox.Visibility = Visibility.Visible;
-                this.SurNameBlock.Visibility = Visibility.Visible;
+                this.SurNameLabel.Visibility = Visibility.Visible;
                 this.GroupNameComboBox.Visibility = Visibility.Visible;
-                this.GroupNameBlock.Visibility = Visibility.Visible;
+                this.GroupLabel.Visibility = Visibility.Visible;
+                this.MinHeight = 590;
             }
 
         }
@@ -76,27 +78,48 @@ namespace Client
             string answer = null;
             if (!isAdmin)
             {
-                if (NameBox.Text != "" && SurNameBox.Text !="" && LoginBox.Text != "" && PasswordBox.Text != "" && ConfirmPasswordBox.Text != "" && selectedName != null)
+                if (NameBox.Text != "" && SurNameBox.Text != "" && LoginBox.Text != "" && PasswordBox.Password != "" && ConfirmPasswordBox.Password != "" && selectedName != null)
                 {
-                    if (PasswordBox.Text.Length > 4)
+                    if (PasswordBox.Password.Length > 4)
                     {
-                        if (PasswordBox.Text == ConfirmPasswordBox.Text)
+                        if (PasswordBox.Password == ConfirmPasswordBox.Password)
                         {
-                            student = new DTOStudent { Name = NameBox.Text, SurName = SurNameBox.Text, Login = LoginBox.Text, Password = PasswordBox.Text, GroupId = groups.FirstOrDefault(g => g.GroupName == selectedName).GroupId };
+                            student = new DTOStudent { Name = NameBox.Text, SurName = SurNameBox.Text, Login = LoginBox.Text, Password = PasswordBox.Password, GroupId = groups.FirstOrDefault(g => g.GroupName == selectedName).GroupId };
                             answer = client.Registrate(student);
+                            if (answer == "successfully")
+                            {
+                                client.LogOut();
+                                Close();
+                            }
+                            else if (answer == "login already exists")
+                            {
+                                MessageBox.Show("Already exist user with this login!!!");
+                                LoginBox.Text = "";
+                            }
+                            else if (answer == "password already exists")
+                            {
+                                MessageBox.Show("Already exist user with this password!!!");
+                                PasswordBox.Password = "";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Something wrong!!!");
+                                client.Disconnect();
+                                Close();
+                            }
                         }
                         else
                         {
                             MessageBox.Show("Error in password or confirm password!!!");
-                            PasswordBlock.Foreground = Brushes.Red;
-                            ConfirmPasswordBlock.Foreground = Brushes.Red;
+                            PasswordBox.Foreground = Brushes.Red;
+                            ConfirmPasswordBox.Foreground = Brushes.Red;
                         }
                     }
                     else
                     {
                         MessageBox.Show("Error in password or confirm password!!!");
-                        PasswordBlock.Foreground = Brushes.Red;
-                        ConfirmPasswordBlock.Foreground = Brushes.Red;
+                        PasswordBox.Foreground = Brushes.Red;
+                        ConfirmPasswordBox.Foreground = Brushes.Red;
                     }
                 }
                 else
@@ -104,29 +127,29 @@ namespace Client
                     MessageBox.Show("Fill all the gaps!!!");
                 }
             }
-            else 
+            else
             {
-                if (NameBox.Text != "" && LoginBox.Text != "" && PasswordBox.Text != "" && ConfirmPasswordBox.Text != "")
+                if (NameBox.Text != "" && LoginBox.Text != "" && PasswordBox.Password != "" && ConfirmPasswordBox.Password != "")
                 {
-                    if (PasswordBox.Text.Length > 4)
+                    if (PasswordBox.Password.Length > 4)
                     {
-                        if (PasswordBox.Text == ConfirmPasswordBox.Text)
+                        if (PasswordBox.Password == ConfirmPasswordBox.Password)
                         {
-                            admin = new DTOAdministrator { Name = NameBox.Text, Login = LoginBox.Text, Password = PasswordBox.Text };
+                            admin = new DTOAdministrator { Name = NameBox.Text, Login = LoginBox.Text, Password = PasswordBox.Password };
                             answer = client.Registrate(admin);
                         }
                         else
                         {
                             MessageBox.Show("Error in password or confirm password!!!");
-                            PasswordBlock.Foreground = Brushes.Red;
-                            ConfirmPasswordBlock.Foreground = Brushes.Red;
+                            PasswordBox.Foreground = Brushes.Red;
+                            ConfirmPasswordBox.Foreground = Brushes.Red;
                         }
                     }
                     else
                     {
                         MessageBox.Show("Error in password or confirm password!!!");
-                        PasswordBlock.Foreground = Brushes.Red;
-                        ConfirmPasswordBlock.Foreground = Brushes.Red;
+                        PasswordBox.Foreground = Brushes.Red;
+                        ConfirmPasswordBox.Foreground = Brushes.Red;
                     }
                 }
                 else
@@ -134,26 +157,7 @@ namespace Client
                     MessageBox.Show("Fill all the gaps!!!");
                 }
             }
-            if (answer == "successfully")
-            {
-                Close();
-            }
-            else if (answer == "login already exists")
-            {
-                MessageBox.Show("Already exist user with this login!!!");
-                LoginBox.Text = "";
-            }
-            else if (answer == "password already exists")
-            {
-                MessageBox.Show("Already exist user with this password!!!");
-                PasswordBox.Text = "";
-            }
-            else
-            {
-                MessageBox.Show("Something wrong!!!");
-                client.Disconnect();
-                Close();
-            }
+
         }
     }
 }

@@ -5,159 +5,78 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="RegistrarionWindow" MinHeight="450" MaxHeight="490" MinWidth="420" Width="420"
-        WindowStartupLocation="CenterScreen">
+        Title="RegistrarionWindow" MinHeight="590" MaxHeight="90" MinWidth="420" Width="420"
+        WindowStartupLocation="CenterScreen" Height="592.133">
 
-    <Grid Background="LightCyan">
-        <StackPanel Margin="0,0,-0.4,-0.4">
-            <TextBlock Foreground="Blue" FontSize="30" Text=" Registration" FontStretch="ExtraExpanded"  Margin="100,30,75,10" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Background="{x:Null}" Width="260" RenderTransformOrigin="0.5,0.5" FontFamily="Verdana">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform X="3"/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
+    <Grid Background="LightCyan" Margin="0,0,-0.4,-2.2" RenderTransformOrigin="0.505,0.0">
+        <Border BorderThickness="2" Margin="0,0,0,2">
 
-            <Button x:Name="ChangeRegistrationButton" Background="Blue" FontSize="10" Foreground="White" Content="New Admin" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="190" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,10,90,20" Click="ChangeRegistrationButton_Click">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
+            <Border.BorderBrush>
+                <DrawingBrush Viewport="0,0,8,8" ViewportUnits="Absolute" TileMode="Tile">
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <GeometryDrawing Brush="DarkCyan">
+                                <GeometryDrawing.Geometry>
+                                    <GeometryGroup>
+                                        <RectangleGeometry Rect="0,0,50,50" />
+                                        <RectangleGeometry Rect="50,50,50,50" />
+                                    </GeometryGroup>
+                                </GeometryDrawing.Geometry>
+                            </GeometryDrawing>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Border.BorderBrush>
 
-            <TextBox x:Name="NameBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <TextBlock IsHitTestVisible="False" FontSize="14" Text="Name" Padding="6,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-115,-75,0,0" Foreground="DarkGray">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=NameBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
 
-            <TextBox x:Name="SurNameBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <TextBlock x:Name="SurNameBlock" IsHitTestVisible="False" FontSize="14" Text="SurName" Padding="25,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-115,-75,0,0" Foreground="DarkGray" >
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=SurNameBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+            <StackPanel Margin="0.4,0.4,0,-1">
 
-            <ComboBox x:Name="GroupNameComboBox" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,5,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190" SelectionChanged="GroupNameComboBox_Selected">
-                <ComboBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </ComboBox.Resources>
-            </ComboBox>
+                <TextBlock Foreground="Blue" FontSize="30" Text=" Registration" FontStretch="ExtraExpanded"  Margin="0,30,94.4,10" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold" Background="{x:Null}" Width="226" RenderTransformOrigin="0.5,0.5" FontFamily="Verdana" Padding="0,0,98,0">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform X="3"/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
 
-            <TextBlock x:Name="GroupNameBlock" IsHitTestVisible="False" FontSize="14" Text="Groups" Padding="20,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-113,-75,0,0" Foreground="DarkGray" >
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=GroupNameComboBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                <Button x:Name="ChangeRegistrationButton" Background="Blue" FontSize="10" Foreground="White" Content="New Admin" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20" Width="190" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,10,90,10" Click="ChangeRegistrationButton_Click">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+                <Label x:Name="NameLabel" Content="Name:"  FontSize="14" Foreground="DarkCyan" Width="50" Margin="110,0,0,0" HorizontalAlignment="Left"/>
 
-            <TextBox x:Name="LoginBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <TextBlock IsHitTestVisible="False" FontSize="14" Text="Login" Padding="6,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-115,-75,0,0" Foreground="DarkGray">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=LoginBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                <TextBox x:Name="NameBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190"/>
 
-            <TextBox x:Name="PasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <TextBlock x:Name="PasswordBlock" IsHitTestVisible="False" FontSize="14" Text="Password" Padding="27,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-115,-75,0,0" Foreground="DarkGray">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=PasswordBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                <Label x:Name="SurNameLabel" Content="SurName:"  FontSize="14" Foreground="DarkCyan" Width="73" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <TextBox x:Name="SurNameBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190"/>
 
-            <TextBox x:Name="ConfirmPasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190">
-                <TextBox.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </TextBox.Resources>
-            </TextBox>
-            <TextBlock x:Name="ConfirmPasswordBlock" IsHitTestVisible="False" FontSize="14" Text="Confirm Password" Padding="85,3,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-115,-75,0,0" Foreground="DarkGray">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=ConfirmPasswordBox}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
+                <Label x:Name="GroupLabel" Content="Group:"  FontSize="14" Foreground="DarkCyan" Width="59" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <ComboBox x:Name="GroupNameComboBox" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,5,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190" SelectionChanged="GroupNameComboBox_Selected"/>
 
-            <Button x:Name="RegistrateButton" Background="Blue" FontSize="14" Foreground="White" Content="Registrate" HorizontalAlignment="Center" VerticalAlignment="Center" Width="190" Height="28" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,0" Click="RegistrateButton_Click">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="8"/>
-                    </Style>
-                </Button.Resources>
-            </Button>
-            
-        </StackPanel>
+                <Label x:Name="LoginLabel" Content="Login:"  FontSize="14" Foreground="DarkCyan" Width="50" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <TextBox x:Name="LoginBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190"/>
+
+                <Label x:Name="PasswordLabel" Content="Password:"  FontSize="14" Foreground="DarkCyan" Width="73" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <PasswordBox x:Name="PasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190"/>
+
+                <Label x:Name="ConfirmPasswordLabel" Content="Confirm Password:"  FontSize="14" Foreground="DarkCyan" Width="137" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <PasswordBox x:Name="ConfirmPasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,20" VerticalAlignment="Center" Width="190"/>
+
+                <Button x:Name="RegistrateButton" Background="Blue" FontSize="14" Foreground="White" Content="Registrate" HorizontalAlignment="Center" VerticalAlignment="Center" Width="190" Height="28" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,0" Click="RegistrateButton_Click">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

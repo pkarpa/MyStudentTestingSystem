@@ -20,6 +20,8 @@ namespace DTOLibraryTestingSystem
 
         public int GroupId { get; set; }
 
+        public string GroupName { get; set; }
+
         public ICollection<int> TestSessionsId { get; set; }
 
     }

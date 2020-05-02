@@ -19,29 +19,27 @@ namespace Client
     /// </summary>
     public partial class LoginWindow : Window
     {
-        bool isAdmin;
         ClientObject client;
         public LoginWindow()
         {
             InitializeComponent();
-            isAdmin = false;
             client = new ClientObject();
-            client.Connect();
         }
 
         // кнопка входу в систему
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            if (PasswordBox.Text != "" && LoginBox.Text != "")
+            if (PasswordBox.Password != "" && LoginBox.Text != "")
             {
-                if (PasswordBox.Text.Length > 4)
+                if (PasswordBox.Password.Length > 4)
                 {
-                    string answer = client.LogIn(isAdmin, LoginBox.Text, PasswordBox.Text);
+                    client.Connect();
+                    string answer = client.LogIn(LoginBox.Text, PasswordBox.Password);
                     if (answer == "succesfully")
                     {
                         MainWindow mw = new MainWindow(client);
                         Close();
-                        mw.ShowDialog();                       
+                        mw.ShowDialog();
                     }
                     else if (answer == "No user with this password")
                     {
@@ -53,7 +51,7 @@ namespace Client
                         MessageBox.Show(answer);
                         LoginBox.Foreground = Brushes.Red;
                     }
-                    else 
+                    else
                     {
                         MessageBox.Show("Something wrong!!!");
                         client.Disconnect();
@@ -63,10 +61,10 @@ namespace Client
                 else
                 {
                     MessageBox.Show("Password is short, minimum 5 characters!!!");
-                    PasswordBox.Text = "";
+                    PasswordBox.Password = "";
                 }
             }
-            else 
+            else
             {
                 MessageBox.Show("Fill all the gaps!!!");
             }
@@ -75,23 +73,9 @@ namespace Client
         // Кнопка переходу до реєстрації
         private void RegistrateButton_Click(object sender, RoutedEventArgs e)
         {
+            client.Connect();
             RegistrarionWindow rw = new RegistrarionWindow(client);
             rw.ShowDialog();
-        }
-
-        // кнопка зміни користувача (студент/адміністратор)
-        private void ChangeUserButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (isAdmin)
-            {
-                isAdmin = false;
-                this.ChangeUserButton.Content = "As Admin";
-            }
-            else 
-            {
-                isAdmin = true;
-                this.ChangeUserButton.Content = "As Student";
-            }
         }
     }
 }

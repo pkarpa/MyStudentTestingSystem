@@ -110,6 +110,9 @@
     <Compile Include="Pages\AdminTestSessions.xaml.cs">
       <DependentUpon>AdminTestSessions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StudentAccount.xaml.cs">
+      <DependentUpon>StudentAccount.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RegistrarionWindow.xaml.cs">
       <DependentUpon>RegistrarionWindow.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\AdminTestSessions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StudentAccount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

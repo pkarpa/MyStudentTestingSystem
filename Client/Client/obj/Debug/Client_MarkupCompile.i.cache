@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\pavlo\C#\Курсова\Client\Client\obj\Debug\
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\Client\Client\obj\Debug\
 Client
 none
 false
 DEBUG;TRACE
-C:\Users\pavlo\C#\Курсова\Client\Client\App.xaml
-10-1065121458
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\Client\Client\App.xaml
+111790152594
 
-16-31937035
-128-55722853
-ChangeUserPassword.xaml;LoginWindow.xaml;MainWindow.xaml;Pages\AdminAccount.xaml;Pages\AdminGroups.xaml;Pages\AdminStudents.xaml;Pages\AdminSubjects.xaml;Pages\AdminTests.xaml;Pages\AdminTestSessions.xaml;RegistrarionWindow.xaml;
+171838079874
+128-1006658646
+ChangeUserPassword.xaml;LoginWindow.xaml;MainWindow.xaml;Pages\AdminAccount.xaml;Pages\AdminGroups.xaml;Pages\AdminStudents.xaml;Pages\AdminSubjects.xaml;Pages\AdminTests.xaml;Pages\AdminTestSessions.xaml;Pages\StudentAccount.xaml;RegistrarionWindow.xaml;
 
-True
+False
 
