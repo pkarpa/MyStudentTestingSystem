@@ -1,0 +1,16 @@
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\bin\Debug\DTOLibraryTestingSystem.dll
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\bin\Debug\DTOLibraryTestingSystem.pdb
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.csprojAssemblyReference.cache
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.dll
+C:\Users\pavlo\C#\Курсова\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.pdb
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\DTOLibraryTestingSystem\DTOLibraryTestingSystem\bin\Debug\DTOLibraryTestingSystem.dll
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\DTOLibraryTestingSystem\DTOLibraryTestingSystem\bin\Debug\DTOLibraryTestingSystem.pdb
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.csprojAssemblyReference.cache
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.dll
+C:\Users\pavlo\C#\StudentTestingSystem\MyStudentTestingSystem\DTOLibraryTestingSystem\DTOLibraryTestingSystem\obj\Debug\DTOLibraryTestingSystem.pdb
+C:\Work\Project\Investigation\TestingSystem\DTO\bin\Debug\DTOLibraryTestingSystem.dll
+C:\Work\Project\Investigation\TestingSystem\DTO\bin\Debug\DTOLibraryTestingSystem.pdb
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTOLibraryTestingSystem.csprojAssemblyReference.cache
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTOLibraryTestingSystem.csproj.CoreCompileInputs.cache
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTOLibraryTestingSystem.dll
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTOLibraryTestingSystem.pdb

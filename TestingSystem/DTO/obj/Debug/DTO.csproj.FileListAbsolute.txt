@@ -1,0 +1,6 @@
+C:\Work\Project\Investigation\TestingSystem\DTO\bin\Debug\DTO.dll
+C:\Work\Project\Investigation\TestingSystem\DTO\bin\Debug\DTO.pdb
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTO.csprojAssemblyReference.cache
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTO.csproj.CoreCompileInputs.cache
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTO.dll
+C:\Work\Project\Investigation\TestingSystem\DTO\obj\Debug\DTO.pdb

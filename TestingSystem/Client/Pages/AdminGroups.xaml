@@ -1,0 +1,114 @@
+﻿<Page x:Class="Client.Pages.AdminGroups"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+      xmlns:dto="clr-namespace:DTO;assembly=DTO"
+      mc:Ignorable="d" 
+      d:DesignHeight="380" d:DesignWidth="793.6"
+      Title="AdminGroups" Background="AliceBlue">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="63" Width="135" IsEnabled="False" Margin="10,3,0,10"><Run Text="Groups"/></TextBlock>
+        <Label Content="Group:" HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16"/>
+        <ComboBox Name="GroupsComboBox" HorizontalAlignment="Left" Margin="83,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Height="25"/>
+        <Button x:Name="DetailsButton" Background="Blue" FontSize="12" Foreground="White" Content="Details" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="265,17,0,0" Click="DetailsButton_Click" Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="DeleteButton" Background="Blue" FontSize="12" Foreground="White" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="320,17,0,0" Click="DeleteButton_Click" Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="AddButton" Background="Blue" FontSize="12" Foreground="White" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="210,17,0,0" Click="AddButton_Click" Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Label Name="AddGroupLabel" Content="Name:" HorizontalAlignment="Left" Margin="20,22,0,0" Grid.Row="2" VerticalAlignment="Top" FontSize="16" Visibility="Hidden"/>
+        <TextBox x:Name="AddGroupTextBox" HorizontalAlignment="Left" Height="25" Margin="84,26,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Visibility="Hidden"/>
+        <Button x:Name="SaveButton" Background="Blue" FontSize="12" Foreground="White" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="210,26,0,0" Click="SaveButton_Click" Grid.Row="2" Visibility="Hidden">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Grid x:Name="DetailsGrid" HorizontalAlignment="Left" Height="218" Margin="10,0,0,0" Grid.Row="2" VerticalAlignment="Top" Width="774" RenderTransformOrigin="0.591,0.272" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Name:" HorizontalAlignment="Left" Margin="33,0,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="59" RenderTransformOrigin="0.383,0.077" Grid.Column="0"/>
+            <TextBox x:Name="GroupName" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" FontSize="16" Text="Name" VerticalAlignment="Top" Width="138" IsEnabled="False" Grid.Column="0" Margin="97,7,0,0" />
+            <Button x:Name="ChangeNameButton" Background="Blue" FontSize="12" Foreground="White" Content="Change" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.15" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="ChangeNameButton_Click" Grid.Column="0" Margin="265,4.85,0,0" HorizontalContentAlignment="Right" UseLayoutRounding="False">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Label Content="Students:" HorizontalAlignment="Left" Margin="33,35,0,0" Grid.Column="0" VerticalAlignment="Top" Width="84" FontSize="16" RenderTransformOrigin="0.46,0.203"/>
+            <ListView x:Name="studentsList" HorizontalAlignment="Left" Height="100" Margin="33,72,0,0" Grid.Column="0" VerticalAlignment="Top" Width="227" ItemsSource="{DynamicResource ResourceKey=students}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Width="100">Name</GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=SurName}" Width="100">SurName</GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.Resources>
+                    <col:ArrayList x:Key="students">
+                        <dto:DTOStudent Name="Stud1" SurName="Sur1"/>
+                    </col:ArrayList>
+                </ListView.Resources>
+            </ListView>
+            <Button x:Name="DeleteStudentButton" Background="Blue" FontSize="12" Foreground="White" Content="Delete student" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.15" Width="84.8" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="DeleteStudentButton_Click" Grid.Column="0" Margin="175.2,182,0,0" HorizontalContentAlignment="Center" UseLayoutRounding="False">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Label Content="Tests:" HorizontalAlignment="Left" Margin="39.8,35,0,0" Grid.Column="1" VerticalAlignment="Top" Width="84" FontSize="16"/>
+            <ListView x:Name="testsList" HorizontalAlignment="Left" Height="100" Margin="39.8,72,0,0" Grid.Column="1" VerticalAlignment="Top" Width="205" ItemsSource="{DynamicResource ResourceKey=tests}">
+                <ListView.Resources>
+                    <col:ArrayList x:Key="tests">
+                        <dto:DTOTest TestName="Test1" TestCountScores="434" />
+                    </col:ArrayList>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding TestName}" Width="100" Header="Name"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding TestCountScores}" Width="100" Header="Count Scores"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button x:Name="DeleteTestButton" Background="Blue" FontSize="12" Foreground="White" Content="Delete test" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25.15" Width="84.8" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="DeleteTestButton_Click" Grid.Column="1" Margin="160,182,0,0" HorizontalContentAlignment="Center" UseLayoutRounding="False">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+
+    </Grid>
+</Page>

@@ -1,0 +1,12 @@
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\DatabaseLibrary.dll.config
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\DatabaseLibrary.dll
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\DatabaseLibrary.pdb
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.dll
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.SqlServer.dll
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.xml
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.SqlServer.xml
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.csprojAssemblyReference.cache
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.csproj.CoreCompileInputs.cache
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.csproj.CopyComplete
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.dll
+C:\Work\Project\Investigation\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.pdb
