@@ -13,8 +13,6 @@ namespace DTO
 
         public string Password { get; set; }
 
-        public ICollection<int> GroupsId { get; set; }
-
         public ICollection<int> SubjectsId { get; set; }
 
     }

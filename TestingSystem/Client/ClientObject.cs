@@ -212,15 +212,7 @@ namespace Client
       return groups;
     }
 
-    // Метод який повертає групи студентів для конкретного адміністратора
-    public List<DTOGroup> GetGroupsForAdmin()
-    {
-      string message = "GetGroupsForAdmin:" + id;
-      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
-      List<DTOGroup> groups = (List<DTOGroup>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
-      return groups;
-    }
-
+  
     // Метод який видаляє групу за її id
     public string DeleteGroup(int id)
     {
@@ -283,7 +275,7 @@ namespace Client
     // Метод для створення нової групи студентів, приймає назву групи
     public string AddGroup(string name)
     {
-      string message = "AddGroup:" + id + " " + name;
+      string message = "AddGroup:" + name;
       SendMessage(message); // надсилаємо повідомлення на серверну частину про створення нової групи
       string answer = RecieveMessages();  // приймаємо відповідь з сервера 
 

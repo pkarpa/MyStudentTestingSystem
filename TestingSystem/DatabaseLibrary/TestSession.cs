@@ -16,9 +16,9 @@ namespace TestingSystemDatabaseLibrary
 
         public DateTime EndTime { get; set; }
 
-        public virtual ICollection<Answer> Answers { get; set; }
-        public virtual Test Test { get; set; }
-        public virtual Student Student { get; set; }
+        public ICollection<Answer> Answers { get; set; }
+        public Test Test { get; set; }
+        public Student Student { get; set; }
 
         public TestSession()
         {

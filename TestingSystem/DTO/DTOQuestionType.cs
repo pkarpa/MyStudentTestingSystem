@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DTO
 {
@@ -6,5 +7,7 @@ namespace DTO
     {
         public int Id { get; set; }
         public string QuestionTypeName { get; set; }
+
+        public ICollection<int> Questions { get; set; }
     }
 }

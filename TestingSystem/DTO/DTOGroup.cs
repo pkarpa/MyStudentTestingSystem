@@ -10,8 +10,6 @@ namespace DTO
 
         public string GroupName { get; set; }
 
-        public int AdminId { get; set; }
-
         public ICollection<int> StudentsId { get; set; }
 
         public ICollection<int> TestsId { get; set; }

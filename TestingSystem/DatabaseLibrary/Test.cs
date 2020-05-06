@@ -22,16 +22,19 @@ namespace TestingSystemDatabaseLibrary
 
         public bool MixAnswersOrder { get; set; }
 
-        public virtual ICollection<Group> Groups { get; set; }
+        public ICollection<Group> Groups { get; set; }
 
-        public virtual ICollection<TestSession> TestSessions { get; set; }
+        public ICollection<TestSession> TestSessions { get; set; }
 
-        public virtual Theme Theme { get; set; }
+        public Theme Theme { get; set; }
+
+        public ICollection<Question> Questions { get; set; }
 
         public Test()
         {
             Groups = new List<Group>();
             TestSessions = new List<TestSession>();
+            Questions = new List<Question>();
         }
     }
 }

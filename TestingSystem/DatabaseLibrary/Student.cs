@@ -17,9 +17,9 @@ namespace TestingSystemDatabaseLibrary
 
         public string Password { get; set; }
 
-        public virtual Group Group { get; set; }
+        public Group Group { get; set; }
 
-        public virtual ICollection<TestSession> TestSessions { get; set; }
+        public ICollection<TestSession> TestSessions { get; set; }
 
         public Student()
         {

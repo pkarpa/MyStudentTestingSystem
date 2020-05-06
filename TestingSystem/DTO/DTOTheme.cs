@@ -8,6 +8,5 @@ namespace DTO
         public int Id { get; set; }
         public string ThemeName { get; set; }
         public int SubjectId { get; set; }
-        public ICollection<int> QuestionsId { get; set; }
     }
 }

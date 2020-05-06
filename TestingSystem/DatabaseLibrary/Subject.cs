@@ -12,9 +12,9 @@ namespace TestingSystemDatabaseLibrary
 
         public string SubjectName { get; set; }
 
-        public virtual ICollection<Theme> Themes { get; set; }
+        public ICollection<Theme> Themes { get; set; }
 
-        public virtual Administrator Admin { get; set; }
+        public Administrator Admin { get; set; }
 
         public Subject()
         {

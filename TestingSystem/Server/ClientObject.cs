@@ -84,10 +84,6 @@ namespace TestingSystemServer
                             GetGroups();
                             Console.WriteLine(this.ClientObjectId + ": GetGroups");
                             break;
-                        case "GetGroupsForAdmin":
-                            GetGroupsForAdmin(message[1]);
-                            Console.WriteLine(this.ClientObjectId + ": GetGroupsForAdmin");
-                            break;
                         case "AddGroup":
                             AddGroup(message[1]);
                             Console.WriteLine(this.ClientObjectId + ": AddGroup");
@@ -415,23 +411,15 @@ namespace TestingSystemServer
             using (var db = new TestingSystemDBContext())
             {
                 var admin = db.Administrators.FirstOrDefault(a => a.Id == adminId); // Отримуємо адміністратора з бази по id
-                List<int> groupsId = new List<int>(); // список груп, які створив цей адміністратор
                 List<int> subjectsId = new List<int>(); // список предметів, які створив цей адміністратор
-                if (admin.Groups.Count != 0)
-                {
-                    foreach (var item in admin.Groups)
-                    {
-                        groupsId.Add(item.GroupId);
-                    }
-                }
                 if (admin.Subjects.Count != 0)
                 {
                     foreach (var item in admin.Subjects)
                     {
-                        groupsId.Add(item.SubjectId);
+                        subjectsId.Add(item.SubjectId);
                     }
                 }
-                DTOAdministrator administrator = new DTOAdministrator { Id = admin.Id, Name = admin.Name, Login = admin.Login, Password = admin.Password, GroupsId = groupsId, SubjectsId = subjectsId }; // створення об'єкта адміністратора для надсилання 
+                DTOAdministrator administrator = new DTOAdministrator { Id = admin.Id, Name = admin.Name, Login = admin.Login, Password = admin.Password, SubjectsId = subjectsId }; // створення об'єкта адміністратора для надсилання 
                 SendObject(administrator); // надсилання об'єкта адміністратора на клієнтську частину
             }
         }
@@ -459,15 +447,13 @@ namespace TestingSystemServer
         // Створення та збереження нової групи студентів в базу 
         private void AddGroup(string mess)
         {
-            string[] el = mess.Split(); // отримуємо повіжомлення з даними про групу
-            int adminId = int.Parse(el[0]); // id адміністратора який створив групу
-            string groupName = el[1]; // назва групи
+            string groupName = mess; // назва групи
             using (var db = new TestingSystemDBContext())
             {
                 // перевірка чи не існує вже групи з таким іменем в базі 
                 if (db.Groups.FirstOrDefault(g => g.GroupName == groupName) == null)
                 {
-                    Group gr = new Group() { Admin = db.Administrators.FirstOrDefault(a => a.Id == adminId), GroupName = groupName }; // Створення об'єкта групи
+                    Group gr = new Group() { GroupName = groupName }; // Створення об'єкта групи
                     db.Groups.Add(gr); // додаємо групу до бази
                     db.SaveChanges();
                     SendMessage("successfully"); // відправляємо повідомлення про успішність операції
@@ -591,7 +577,7 @@ namespace TestingSystemServer
         {
             using (var db = new TestingSystemDBContext())
             {
-                List<Group> groups = db.Groups.Include(p => p.Admin).ToList(); // список груп із бази
+                List<Group> groups = db.Groups.ToList(); // список груп із бази
                 List<DTOGroup> dtoGroups = new List<DTOGroup>(); // Список груп для передавання на клієнтську частину
                 foreach (Group item in groups)
                 {
@@ -605,36 +591,7 @@ namespace TestingSystemServer
                     {
                         testsId.Add(ts.TestId);
                     }
-                    DTOGroup group = new DTOGroup { GroupId = item.GroupId, AdminId = item.Admin.Id, GroupName = item.GroupName, StudentsId = studentsId, TestsId = testsId }; // Об'єкт групи для передавання на клієнтську частину
-                    dtoGroups.Add(group); // додаємо елемент до списку
-                }
-
-                SendObject(dtoGroups); // відправляємо об'єкт клієнту
-            }
-
-        }
-
-        // Метод який повертає групи студентів для певного адміністратора
-        private void GetGroupsForAdmin(string mess)
-        {
-            int id = int.Parse(mess);
-            using (var db = new TestingSystemDBContext())
-            {
-                List<Group> groups = db.Groups.Include(p => p.Admin).Where(a => a.Admin.Id == id).ToList(); // список груп із бази
-                List<DTOGroup> dtoGroups = new List<DTOGroup>(); // Список груп для передавання на клієнтську частину
-                foreach (Group item in groups)
-                {
-                    List<int> studentsId = new List<int>();
-                    List<int> testsId = new List<int>();
-                    foreach (Student st in item.Students)
-                    {
-                        studentsId.Add(st.StudentId);
-                    }
-                    foreach (Test ts in item.Tests)
-                    {
-                        testsId.Add(ts.TestId);
-                    }
-                    DTOGroup group = new DTOGroup { GroupId = item.GroupId, AdminId = item.Admin.Id, GroupName = item.GroupName, StudentsId = studentsId, TestsId = testsId }; // Об'єкт групи для передавання на клієнтську частину
+                    DTOGroup group = new DTOGroup { GroupId = item.GroupId, GroupName = item.GroupName, StudentsId = studentsId, TestsId = testsId }; // Об'єкт групи для передавання на клієнтську частину
                     dtoGroups.Add(group); // додаємо елемент до списку
                 }
 

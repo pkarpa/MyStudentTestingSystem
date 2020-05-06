@@ -14,8 +14,8 @@ namespace TestingSystemDatabaseLibrary
 
         public bool AnswerCorrects { get; set; }
 
-        public virtual Question Question { get; set; }
+        public Question Question { get; set; }
 
-        public virtual TestSession TestSession { get; set; }
+        public TestSession TestSession { get; set; }
     }
 }

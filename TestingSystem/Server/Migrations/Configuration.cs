@@ -1,4 +1,4 @@
-﻿namespace TestingSystemServer.Migrations
+﻿namespace Server.Migrations
 {
     using System;
     using System.Data.Entity;

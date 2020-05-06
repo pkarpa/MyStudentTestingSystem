@@ -12,11 +12,9 @@ namespace TestingSystemDatabaseLibrary
 
         public string GroupName { get; set; }
 
-        public virtual Administrator Admin { get; set; }
+        public ICollection<Student> Students { get; set; }
 
-        public virtual ICollection<Student> Students { get; set; }
-
-        public virtual ICollection<Test> Tests { get; set; }
+        public ICollection<Test> Tests { get; set; }
 
         public Group()
         {

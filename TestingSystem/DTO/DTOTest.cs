@@ -19,6 +19,8 @@ namespace DTO
 
         public int ThemeId { get; set; }
 
+
+        public ICollection<int> QuestionsId { get; set; }
         public ICollection<int> GroupsId { get; set; }
 
         public ICollection<int> TestSessionsId { get; set; }

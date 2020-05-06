@@ -137,6 +137,27 @@ namespace Client
                         {
                             admin = new DTOAdministrator { Name = NameBox.Text, Login = LoginBox.Text, Password = PasswordBox.Password };
                             answer = client.Registrate(admin);
+                            if (answer == "successfully")
+                            {
+                                client.LogOut();
+                                Close();
+                            }
+                            else if (answer == "login already exists")
+                            {
+                                MessageBox.Show("Already exist user with this login!!!");
+                                LoginBox.Text = "";
+                            }
+                            else if (answer == "password already exists")
+                            {
+                                MessageBox.Show("Already exist user with this password!!!");
+                                PasswordBox.Password = "";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Something wrong!!!");
+                                client.Disconnect();
+                                Close();
+                            }
                         }
                         else
                         {

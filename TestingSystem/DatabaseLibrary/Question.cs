@@ -11,8 +11,9 @@ namespace TestingSystemDatabaseLibrary
     [Serializable]public class Question
     {
         [Key]
-        [ForeignKey("QuestionType")]
         public int Id { get; set; }
+
+        public int QuestionTypeId { get; set; }
 
         public string QuestionText { get; set; }
 
@@ -23,8 +24,6 @@ namespace TestingSystemDatabaseLibrary
         public double QuestionCountScores { get; set; }
 
         public string QuestionAnswer { get; set; }
-
-        public virtual Theme Theme { get; set; }
 
         public QuestionType QuestionType { get; set; }
     }

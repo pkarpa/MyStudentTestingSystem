@@ -15,14 +15,11 @@ namespace TestingSystemDatabaseLibrary
         public string Login { get; set; }
 
         public string Password { get; set; }
-
-        public virtual ICollection<Group> Groups { get; set; }
-
-        public virtual ICollection<Subject> Subjects { get; set; }
+  
+        public ICollection<Subject> Subjects { get; set; }
 
         public Administrator()
         {
-            Groups = new List<Group>();
             Subjects = new List<Subject>();
         }
     }

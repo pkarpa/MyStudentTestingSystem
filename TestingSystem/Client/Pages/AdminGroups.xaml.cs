@@ -34,7 +34,7 @@ namespace Client.Pages
         // додає групи для перегляду
         public void AddItemsToComboBox()
         {
-            groups = client.GetGroupsForAdmin();
+            groups = client.GetGroups();
             GroupsComboBox.Items.Clear();
             if (groups.Count > 0)
             {

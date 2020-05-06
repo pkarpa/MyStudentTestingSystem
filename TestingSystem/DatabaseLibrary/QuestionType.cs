@@ -10,6 +10,12 @@ namespace TestingSystemDatabaseLibrary
     {
         public int Id { get; set; }
         public string QuestionTypeName { get; set; }
-        public Question Question { get; set; }
+        
+        public ICollection<Question> Questions { get; set; }
+
+        public QuestionType()
+        {
+            Questions = new List<Question>();
+        }
     }
 }
