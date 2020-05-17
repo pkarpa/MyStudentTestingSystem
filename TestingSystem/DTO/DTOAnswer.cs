@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    [Serializable] public class DTOAnswer
+    [Serializable]
+    public class DTOAnswer
     {
         public int AnswerId { get; set; }
 

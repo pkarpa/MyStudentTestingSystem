@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -59,7 +60,8 @@ namespace Client.Pages
             {
                 DetailsGrid.Visibility = Visibility.Visible;
                 DTOGroup group = groups.FirstOrDefault(g => g.GroupName == GroupsComboBox.Text);
-                List<DTOStudent> students = client.GetGroupStudents(group.StudentsId.ToList<int>());
+                List<DTOStudent> students = client.GetGroupStudents(group.GroupId);
+                Thread.Sleep(1000);
                 List<DTOTest> tests = client.GetGroupTests(group.TestsId.ToList<int>());
                 studentsList.ItemsSource = students;
                 testsList.ItemsSource = tests;
@@ -152,7 +154,7 @@ namespace Client.Pages
                 {
                     AddItemsToComboBox();
                     DTOGroup group = groups.FirstOrDefault(g => g.GroupName == gnItem.Content.ToString());
-                    List<DTOStudent> students = client.GetGroupStudents(group.StudentsId.ToList<int>());
+                    List<DTOStudent> students = client.GetGroupStudents(group.GroupId);
                     studentsList.ItemsSource = students;      
                 }
                 else 

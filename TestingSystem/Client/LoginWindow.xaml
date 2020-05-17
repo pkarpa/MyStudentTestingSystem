@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="LoginWindow"  MinHeight="399" MaxHeight="399" MinWidth="420" Width="420"
+        Title="LoginWindow"  MinHeight="399" MaxHeight="700" MinWidth="420" Width="420"
         WindowStartupLocation="CenterScreen" Height="371.8">
 
     <Grid Background="LightCyan" Margin="0,0,-0.4,-2.4">

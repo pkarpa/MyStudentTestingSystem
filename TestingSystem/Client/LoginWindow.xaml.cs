@@ -41,12 +41,7 @@ namespace Client
                         Close();
                         mw.ShowDialog();
                     }
-                    else if (answer == "No user with this password")
-                    {
-                        MessageBox.Show(answer);
-                        PasswordBox.Foreground = Brushes.Red;
-                    }
-                    else if (answer == "No user with this login")
+                    else if (answer == "Login failed, please check username or password.")
                     {
                         MessageBox.Show(answer);
                         LoginBox.Foreground = Brushes.Red;

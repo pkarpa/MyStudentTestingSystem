@@ -9,6 +9,30 @@
       Title="AdminSubjects" Background="AliceBlue">
 
     <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25">Subjects</TextBlock>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="63" Width="135" IsEnabled="False" Margin="10,3,0,10"><Run Text="Subject"/></TextBlock>
+        <Label Content="Subject:" HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16"/>
+        <ComboBox Name="SubjectComboBox" HorizontalAlignment="Left" Margin="83,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="122" Height="25"/>
+        <Button x:Name="DeleteButton" Background="Blue" FontSize="12" Foreground="White" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="270,17,0,0" Click="DeleteButton_Click" Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Button x:Name="AddButton" Background="Blue" FontSize="12" Foreground="White" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="210,17,0,0" Click="AddButton_Click" Grid.Row="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
     </Grid>
 </Page>

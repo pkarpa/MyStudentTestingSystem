@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace DTO
 {
-    [Serializable]public class DTOAdministrator
+    [Serializable]
+    public class DTOAdministrator
     {
         public int Id { get; set; }
 

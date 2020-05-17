@@ -212,7 +212,15 @@ namespace Client
       return groups;
     }
 
-  
+    // Метод який повертає групи студентів 
+    public List<DTOSubject> GetSubjects()
+    {
+      string message = "GetSubjects:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+      List<DTOSubject> groups = (List<DTOSubject>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+      return groups;
+    }
+
     // Метод який видаляє групу за її id
     public string DeleteGroup(int id)
     {
@@ -224,11 +232,11 @@ namespace Client
     }
 
     // Метод який повертає студентів певної групи, приймає список id студентів групи
-    public List<DTOStudent> GetGroupStudents(List<int> studentsId)
+    public List<DTOStudent> GetGroupStudents(int groupId)
     {
       string message = "GetGroupStudents:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання студентів
-      SendObject(studentsId);  // надсилаємо список id студентів групи
+      SendObject(groupId);  // надсилаємо список id студентів групи
       List<DTOStudent> students = new List<DTOStudent>(); // список студентів групи         
       var obj = RecieveObject();  // приймаємо відповідь з сервера
       if (obj is List<DTOStudent>) // перевіряємо чи це список студентів
@@ -253,6 +261,94 @@ namespace Client
       }
 
       return tests;
+    }
+
+    public List<QueDTOQuestionstion> GetQuestions(int testsId)
+    {
+      string message = "GetQuestions:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      SendObject(testsId); // надсилаємо список id тестів групи
+      List<QueDTOQuestionstion> questions = new List<QueDTOQuestionstion>(); // список 
+      var obj = RecieveObject();// приймаємо відповідь з сервера       
+      if (obj is List<QueDTOQuestionstion>) // перевіряємо чи це список тестів
+      {
+        questions = obj as List<QueDTOQuestionstion>; // приводимо до потрібного типу
+      }
+
+      return questions;
+    }
+
+    public List<QueDTOQuestionstion> SaveQuestion(QueDTOQuestionstion question)
+    {
+      string message = "SaveQuestion:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      SendObject(question); // надсилаємо список id тестів групи
+      List<QueDTOQuestionstion> questions = new List<QueDTOQuestionstion>(); // список 
+      var obj = RecieveObject();// приймаємо відповідь з сервера       
+      if (obj is List<QueDTOQuestionstion>) // перевіряємо чи це список тестів
+      {
+        questions = obj as List<QueDTOQuestionstion>; // приводимо до потрібного типу
+      }
+
+      return questions;
+    }
+
+    public List<QueDTOQuestionstion> UpdateQuestion(QueDTOQuestionstion question)
+    {
+      string message = "UpdateQuestion:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      SendObject(question); // надсилаємо список id тестів групи
+      List<QueDTOQuestionstion> questions = new List<QueDTOQuestionstion>(); // список 
+      var obj = RecieveObject();// приймаємо відповідь з сервера       
+      if (obj is List<QueDTOQuestionstion>) // перевіряємо чи це список тестів
+      {
+        questions = obj as List<QueDTOQuestionstion>; // приводимо до потрібного типу
+      }
+
+      return questions;
+    }
+
+    public List<DTOQuestionType> GetQuestionTypes()
+    {
+      string message = "GetQuestionTypes:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      List<DTOQuestionType> questionsTypes = new List<DTOQuestionType>(); // список 
+      var obj = RecieveObject();// приймаємо відповідь з сервера       
+      if (obj is List<DTOQuestionType>) // перевіряємо чи це список тестів
+      {
+        questionsTypes = obj as List<DTOQuestionType>; // приводимо до потрібного типу
+      }
+
+      return questionsTypes;
+    }
+
+    // Метод який повертає тести, які доступні для певної групи, приймає список id тестів групи
+    public List<DTOTest> GetAllTests()
+    {
+      string message = "GetAllTests:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання тестів
+      List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
+      var obj = RecieveObject();// приймаємо відповідь з сервера       
+      if (obj is List<DTOTest>) // перевіряємо чи це список тестів
+      {
+        tests = obj as List<DTOTest>; // приводимо до потрібного типу
+      }
+
+      return tests;
+    }
+
+    public List<DTOTheme> GetTheme()
+    {
+      string message = "GetTheme:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання тестів
+      List<DTOTheme> theme = new List<DTOTheme>(); // список тестів групи
+      var obj = RecieveObject();// приймаємо відповідь з сервера       
+      if (obj is List<DTOTheme>) // перевіряємо чи це список тестів
+      {
+        theme = obj as List<DTOTheme>; // приводимо до потрібного типу
+      }
+
+      return theme;
     }
 
     // Метод який видаляє студента з групи за його id

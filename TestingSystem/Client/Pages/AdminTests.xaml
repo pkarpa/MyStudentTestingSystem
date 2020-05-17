@@ -7,8 +7,22 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="AdminTests" Background="AliceBlue">
+    <Grid x:Name="workGrid" Background="AliceBlue">
 
-    <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25">Tests</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0,4*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Label Content="Теми:" HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16"/>
+            <ComboBox Name="ThemeComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="300" Height="25"/>
+        </StackPanel>
+        <DataGrid x:Name="testsGrid" Grid.Row="1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                RowBackground="LightGray" AlternatingRowBackground="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Назва тесту" Binding="{Binding Path=TestName}" Width="auto" />
+                <DataGridTextColumn Header="Тема" Binding="{Binding Path=ThemeId}" Width="auto" />
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

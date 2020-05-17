@@ -13,7 +13,7 @@ namespace TestingSystemServer
     public class ServerObject
     {
         static TcpListener tcpListener; // об'єкт який приймає вхідні з'єднання
-        List<ClientObject> clients = new List<ClientObject>(); // Срисок який містить всі з'єднання
+        List<ClientObject> clients = new List<ClientObject>(); // Список який містить всі з'єднання
 
         // Метод який додає нове з'єднання
         protected internal void AddConnection(ClientObject clientObject)
@@ -27,6 +27,11 @@ namespace TestingSystemServer
             ClientObject client = clients.FirstOrDefault(c => c.ClientObjectId == id);
             if (client != null)
                 clients.Remove(client);
+        }
+
+        protected internal void RemoveConnections()
+        {
+           clients.Clear();
         }
 
 
@@ -54,7 +59,7 @@ namespace TestingSystemServer
             }
         }
 
-        // Зепиняє прослуховування вхідних з'єднань
+        // Зупиняє прослуховування вхідних з'єднань
         protected internal void Disconnect()
         {
             tcpListener.Stop();

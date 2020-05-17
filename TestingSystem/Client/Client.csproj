@@ -68,8 +68,14 @@
     <Compile Include="Pages\AdminSubjects.xaml.cs">
       <DependentUpon>AdminSubjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminTest.xaml.cs">
+      <DependentUpon>AdminTest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminTests.xaml.cs">
       <DependentUpon>AdminTests.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestDesigner.xaml.cs">
+      <DependentUpon>TestDesigner.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminTestSessions.xaml.cs">
       <DependentUpon>AdminTestSessions.xaml</DependentUpon>
@@ -120,7 +126,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AdminTest.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\AdminTests.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestDesigner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

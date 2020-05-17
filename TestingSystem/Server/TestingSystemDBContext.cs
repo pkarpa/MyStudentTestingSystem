@@ -11,13 +11,13 @@ namespace TestingSystemServer
     [Serializable]
     class TestingSystemDBContext: DbContext
     {
-        static TestingSystemDBContext()
-        {
-            Database.SetInitializer<TestingSystemDBContext>(new ContextInitializer());
-        }
+        //static TestingSystemDBContext()
+        //{
+        //    Database.SetInitializer<TestingSystemDBContext>(new ContextInitializer());
+        //}
         public TestingSystemDBContext() : base("TestingSystemDBConnectionString")
-        {
-
+        { 
+            
         }
 
         public DbSet<Administrator> Administrators { get; set; }
