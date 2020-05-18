@@ -23,10 +23,12 @@ namespace Client
   public partial class MainWindow : Window
   {
     ClientObject client;
+    Window mw;
     public MainWindow(ClientObject cl)
     {
       InitializeComponent();
       client = cl;
+      mw = this;
       if (client.IsAdmin) // в залежості від користувача який входить в систему на головному меню відображаються різні кнопки
       {
         Button myAccount = new Button() { Name = "MyAccountButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "My Account", Padding = new Thickness(25, 0, 25, 7) };
@@ -87,7 +89,14 @@ namespace Client
 
     private void TestsButton_Click(object sender, RoutedEventArgs e)
     {
-      MainFrame.Content = new AdminTests(client);
+        if (client.IsAdmin == true)
+        {
+            MainFrame.Content = new AdminTests(client);
+        }
+        else 
+        {
+                MainFrame.Content = new StudentTests(client, mw);
+        }
     }
 
     // кнопка виходу з системи

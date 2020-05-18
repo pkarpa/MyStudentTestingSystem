@@ -21,3 +21,14 @@ C:\Users\pavlo\Desktop\Нова папка\MyStudentTestingSystem\TestingSystem\
 C:\Users\pavlo\Desktop\Нова папка\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.csproj.CopyComplete
 C:\Users\pavlo\Desktop\Нова папка\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.dll
 C:\Users\pavlo\Desktop\Нова папка\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.pdb
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\DatabaseLibrary.dll.config
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\DatabaseLibrary.dll
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\DatabaseLibrary.pdb
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.dll
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.xml
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.csprojAssemblyReference.cache
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.csproj.CopyComplete
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.dll
+C:\Users\pavlo\Desktop\Testing System\MyStudentTestingSystem\TestingSystem\DatabaseLibrary\obj\Debug\DatabaseLibrary.pdb

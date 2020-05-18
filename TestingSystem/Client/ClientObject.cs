@@ -337,6 +337,19 @@ namespace Client
       return tests;
     }
 
+    public DTOTest GetTest(int testId)
+    {
+        DTOTest dtoTest = null ;
+        string message = "GetTest:" + testId;
+        SendMessage(message);
+        var obj = RecieveObject();
+        if(obj is DTOTest)
+        {
+            dtoTest = obj as DTOTest;
+        }
+        return dtoTest;
+    }
+
     public List<DTOTheme> GetTheme()
     {
       string message = "GetTheme:";
@@ -349,6 +362,20 @@ namespace Client
       }
 
       return theme;
+    }
+
+    public List<DTOTest> GetTestsForSomeGroup()
+    {
+        string message = "GetTestsForSomeGroup:" + id;
+        SendMessage(message);
+        List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
+        var obj = RecieveObject();// приймаємо відповідь з сервера       
+        if (obj is List<DTOTest>) // перевіряємо чи це список тестів
+        {
+            tests = obj as List<DTOTest>; // приводимо до потрібного типу
+        }
+
+        return tests;
     }
 
     // Метод який видаляє студента з групи за його id
