@@ -23,10 +23,12 @@ namespace Client
   public partial class MainWindow : Window
   {
     ClientObject client;
+    Window mw;
     public MainWindow(ClientObject cl)
     {
       InitializeComponent();
       client = cl;
+      mw = this;
       if (client.IsAdmin) // в залежості від користувача який входить в систему на головному меню відображаються різні кнопки
       {
         Button myAccount = new Button() { Name = "MyAccountButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "My Account", Padding = new Thickness(25, 0, 25, 7) };
@@ -39,6 +41,7 @@ namespace Client
         testsButton.Click += TestsButton_Click;
         Button subjectsButton = new Button() { Name = "SubjectsButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Subjects", Padding = new Thickness(25, 0, 25, 7) };
         Button testSessionsButton = new Button() { Name = "TestSessionsButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Test Sessions", Padding = new Thickness(25, 0, 25, 7) };
+        testSessionsButton.Click += AdminTestSessionsButton_Click;
         Button logOutButton = new Button() { Name = "LogOutButton", Background = Brushes.Blue, FontSize = 15, Foreground = Brushes.White, Content = "Log out", Padding = new Thickness(25, 0, 25, 7) };
         logOutButton.Click += LogOutButton_Click;
         buttonsStackPanel.Children.Add(myAccount);
@@ -71,7 +74,7 @@ namespace Client
     // кнопка для переходу на сторінку студентів
     private void StudentsButton_Click(object sender, RoutedEventArgs e)
     {
-      MainFrame.Content = new AdminStudentPage();
+      MainFrame.Content = new AdminStudentPage(client);
     }
 
     // кнопка для переходу на сторінку груп студентів
@@ -85,9 +88,21 @@ namespace Client
       MainFrame.Content = new StudentAccount(client);
     }
 
-    private void TestsButton_Click(object sender, RoutedEventArgs e)
+    private void AdminTestSessionsButton_Click(object sender, RoutedEventArgs e)
     {
-      MainFrame.Content = new AdminTests(client);
+        MainFrame.Content = new AdminTestSessions(client);
+    }
+
+        private void TestsButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (client.IsAdmin == true)
+        {
+            MainFrame.Content = new AdminTests(client);
+        }
+        else 
+        {
+                MainFrame.Content = new StudentTests(client, mw);
+        }
     }
 
     // кнопка виходу з системи

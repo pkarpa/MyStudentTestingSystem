@@ -132,13 +132,31 @@ namespace TestingSystemServer
               InfoAboutStudent(message[1]);
               Console.WriteLine(this.ClientObjectId + ": InfoAboutStudent");
               break;
+            case "GetTestsForSomeGroup":
+                GetTestsForSomeGroup(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetTestsForSomeGroup");
+                break;
+            case "GetTest":
+                GetTest(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetTest");
+                break;              
+            case "GetThemesForSubject":
+                GetThemesForSubject(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetThemesForSubject");
+                break; 
+            case "GetTestsForTheme":
+                GetTestsForTheme(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetTestsForTheme");
+                break;
+            case "GetSubjectsForAdmin":
+                GetSubjectsForAdmin(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetSubjectsForAdmin");
+                break;
             case "LogOut":
               Console.WriteLine(this.ClientObjectId + ": LogOut");
               LogOut();
               return;
-
           }
-
         }
       }
       catch (Exception e)
@@ -207,8 +225,6 @@ namespace TestingSystemServer
     //        }
     //    }
     //}
-
-
     private void LogIn(string mess)
     {
       string[] logEl = mess.Split();
@@ -219,6 +235,10 @@ namespace TestingSystemServer
 
       using (var db = new TestingSystemDBContext())
       {
+        //Group group = db.Groups.FirstOrDefault(x => x.GroupName == "PM1");
+        //Test test = db.Tests.FirstOrDefault(t => t.TestId == 1);
+        //test.Groups.Add(group);
+        //db.SaveChanges();
         var admin = db.Administrators.FirstOrDefault(a => a.Login == login && a.Password == password);
         if (admin != null)
         {
@@ -249,9 +269,107 @@ namespace TestingSystemServer
       this.Close();
     }
 
+    private void GetTest(string mess)
+    {
+        int testId = int.Parse(mess);
+        DTOTest dtoTest = null;
+        using (var db = new TestingSystemDBContext())
+        {
+            Test test = db.Tests.Include(x => x.Theme).FirstOrDefault(t => t.TestId == testId);
+            dtoTest = new DTOTest { TestId = test.TestId, TestName = test.TestName, TestTime = test.TestTime, MixAnswersOrder = test.MixAnswersOrder, MixQuestionsOrder = test.MixQuestionsOrder, TestCountScores = test.TestCountScores, ThemeId = test.Theme.Id };
+        }
 
-    // Реєстрація нового адміністратора
-    private void AdminRegistration()
+        SendObject(dtoTest);
+    }
+        
+    private void GetSubjectsForAdmin(string mess)
+    {
+        List<DTOSubject> subjects = new List<DTOSubject>();
+        using (var db = new TestingSystemDBContext())
+        {
+            int adminId = int.Parse(mess);
+            var subjectDB = db.Subjects.Include(a => a.Admin).ToList();
+            foreach (var subjectItem in subjectDB)
+            {
+                if (subjectItem.Admin.Id == adminId)
+                {
+                    DTOSubject dtoSubject = new DTOSubject
+                    {
+                        SubjectId = subjectItem.SubjectId,
+                        SubjectName = subjectItem.SubjectName
+                    };
+                    subjects.Add(dtoSubject);
+                }    
+            }
+            SendObject(subjects);
+        }
+    }
+
+    private void GetThemesForSubject(string mess)
+    {
+        List<DTOTheme> themes = new List<DTOTheme>();
+        using (var db = new TestingSystemDBContext())
+        {
+            int subjectId = int.Parse(mess);
+            var themeDB = db.Themes.Include(x => x.Subject).ToList();
+            foreach (var themeItem in themeDB)
+            {
+                if (themeItem.Subject.SubjectId == subjectId)
+                {
+                    DTOTheme dtoTheme = new DTOTheme
+                    {
+                        Id = themeItem.Id,
+                        SubjectId = subjectId,
+                        ThemeName = themeItem.ThemeName
+                    };
+                    themes.Add(dtoTheme);
+                }
+            }
+            SendObject(themes);
+        }
+    }
+        
+
+    private void GetTestsForTheme(string mess)
+    {
+        List<DTOTest> tests = new List<DTOTest>();
+        using (var db = new TestingSystemDBContext())
+        {
+            int testId = int.Parse(mess);
+            var testDB = db.Tests.Include(x => x.Theme).ToList();
+            var testSessionDB = db.TestSessions.Include(x => x.Test).ToList();
+            foreach (var testItem in testDB)
+            {
+                List<int> testSessionsId = new List<int>();
+                foreach (var testSession in testSessionDB)
+                {
+                    if (testSession.Test.TestId == testItem.TestId)
+                    {
+                        testSessionsId.Add(testSession.TestSessionId);
+                    }
+                }
+
+                if (testItem.Theme.Id == testId)
+                {
+                    DTOTest dtoTest = new DTOTest
+                    {
+                        TestId = testItem.TestId,
+                        TestName = testItem.TestName,
+                        MixAnswersOrder = testItem.MixAnswersOrder,
+                        MixQuestionsOrder = testItem.MixQuestionsOrder,
+                        TestCountScores = testItem.TestCountScores,
+                        TestTime = testItem.TestTime,
+                        ThemeId = testItem.Theme.Id,
+                        TestSessionsId = testSessionsId
+                    };
+                    tests.Add(dtoTest);
+                }
+            }
+            SendObject(tests);
+        }
+    }
+        // Реєстрація нового адміністратора
+        private void AdminRegistration()
     {
       var obj = RecieveObject(); // отримуємо об'єкт адміністратора з клієнтської частини 
 
@@ -354,7 +472,7 @@ namespace TestingSystemServer
           var studentsDB = db.Students.Include(g => g.Group).Where(s => s.Group.GroupId == (int)obj);
           foreach (var student in studentsDB)
           {
-            DTOStudent dtoStudent = new DTOStudent { StudentId = student.StudentId, Name = student.Name, SurName = student.SurName, Login = student.Login, Password = student.Password, GroupId = student.Group.GroupId }; // Створюємо об'єкт студента для надсилання
+            DTOStudent dtoStudent = new DTOStudent { StudentId = student.StudentId, Name = student.Name, SurName = student.SurName, Login = student.Login, Password = student.Password, GroupId = student.Group.GroupId, GroupName = student.Group.GroupName }; // Створюємо об'єкт студента для надсилання
             students.Add(dtoStudent); // Додаємо студента до списку 
           }
 
@@ -537,9 +655,29 @@ namespace TestingSystemServer
       SendObject(testsDto); // Надсилаємо список тестів на клієнтську частину          
     }
 
+    public void GetTestsForSomeGroup(string mess)
+    {
+        int studentId = int.Parse(mess);
+        List<DTOTest> testsDto = new List<DTOTest>(); // Список тестів
+        using (var db = new TestingSystemDBContext())
+        {
+            Group group = db.Students.Include(g => g.Group).FirstOrDefault(s => s.StudentId == studentId).Group;
+            List<Test> tests = db.Tests.Include(g => g.Groups).Include(t => t.Theme).ToList();
+            foreach (var test in tests)
+            {
+                if (test.Groups.Contains(group))
+                {
+                    DTOTest dtoTest = new DTOTest { TestId = test.TestId, TestName = test.TestName, TestTime = test.TestTime, MixAnswersOrder = test.MixAnswersOrder, MixQuestionsOrder = test.MixQuestionsOrder, TestCountScores = test.TestCountScores, ThemeId = test.Theme.Id }; // Створюємо об'єкт теста для надсилання
+                    testsDto.Add(dtoTest); // Додаємо тест до списку 
+                }
+            }
+        }
+        SendObject(testsDto); // Надсилаємо список тестів на клієнтську частину        
+    }
 
-    // Метод який повертає інформацію про певного адміністратора
-    private void InfoAboutAdmin(string mess)
+
+        // Метод який повертає інформацію про певного адміністратора
+        private void InfoAboutAdmin(string mess)
     {
       int adminId = int.Parse(mess); // отримуємо id адміністратора з повідомлення
       using (var db = new TestingSystemDBContext())

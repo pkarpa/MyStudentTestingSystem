@@ -220,8 +220,32 @@ namespace Client
       List<DTOSubject> groups = (List<DTOSubject>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
       return groups;
     }
+        
+    public List<DTOSubject> GetSubjectsForAdmin()
+    {
+        string message = "GetSubjectsForAdmin:" + id;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        List<DTOSubject> subjects = (List<DTOSubject>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return subjects;
+    }
+        
+    public List<DTOTheme> GetThemesForSubject(int subjectId)
+    {
+        string message = "GetThemesForSubject:" + subjectId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        List<DTOTheme> themes = (List<DTOTheme>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return themes;
+    }
 
-    // Метод який видаляє групу за її id
+    public List<DTOTest> GetTestsForTheme(int themeId)
+    {
+        string message = "GetTestsForTheme:" + themeId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        List<DTOTest> themes = (List<DTOTest>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return themes;
+    }
+
+        // Метод який видаляє групу за її id
     public string DeleteGroup(int id)
     {
       string message = "DeleteGroup:" + id;
@@ -337,6 +361,19 @@ namespace Client
       return tests;
     }
 
+    public DTOTest GetTest(int testId)
+    {
+        DTOTest dtoTest = null ;
+        string message = "GetTest:" + testId;
+        SendMessage(message);
+        var obj = RecieveObject();
+        if(obj is DTOTest)
+        {
+            dtoTest = obj as DTOTest;
+        }
+        return dtoTest;
+    }
+
     public List<DTOTheme> GetTheme()
     {
       string message = "GetTheme:";
@@ -351,8 +388,36 @@ namespace Client
       return theme;
     }
 
-    // Метод який видаляє студента з групи за його id
-    public string DeleteStudentFromGroup(int id)
+    public List<DTOTest> GetTestsForSomeGroup()
+    {
+        string message = "GetTestsForSomeGroup:" + id;
+        SendMessage(message);
+        List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
+        var obj = RecieveObject();// приймаємо відповідь з сервера       
+        if (obj is List<DTOTest>) // перевіряємо чи це список тестів
+        {
+            tests = obj as List<DTOTest>; // приводимо до потрібного типу
+        }
+
+        return tests;
+    }
+
+        public List<DTOTest> GetTestsForSomeAdmin()
+        {
+            string message = "GetTestsForSomeAdmin:" + id;
+            SendMessage(message);
+            List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
+            var obj = RecieveObject();// приймаємо відповідь з сервера       
+            if (obj is List<DTOTest>) // перевіряємо чи це список тестів
+            {
+                tests = obj as List<DTOTest>; // приводимо до потрібного типу
+            }
+
+            return tests;
+        }
+
+        // Метод який видаляє студента з групи за його id
+        public string DeleteStudentFromGroup(int id)
     {
       string mess = "DeleteStudentFromGroup:" + id;
       SendMessage(mess); // надсилаємо повідомлення на серверну частину про видалення студента з групи
