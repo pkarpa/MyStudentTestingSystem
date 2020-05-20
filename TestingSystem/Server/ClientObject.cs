@@ -139,6 +139,18 @@ namespace TestingSystemServer
             case "GetTest":
                 GetTest(message[1]);
                 Console.WriteLine(this.ClientObjectId + ": GetTest");
+                break;              
+            case "GetThemesForSubject":
+                GetThemesForSubject(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetThemesForSubject");
+                break; 
+            case "GetTestsForTheme":
+                GetTestsForTheme(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetTestsForTheme");
+                break;
+            case "GetSubjectsForAdmin":
+                GetSubjectsForAdmin(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetSubjectsForAdmin");
                 break;
             case "LogOut":
               Console.WriteLine(this.ClientObjectId + ": LogOut");
@@ -269,8 +281,94 @@ namespace TestingSystemServer
 
         SendObject(dtoTest);
     }
+        
+    private void GetSubjectsForAdmin(string mess)
+    {
+        List<DTOSubject> subjects = new List<DTOSubject>();
+        using (var db = new TestingSystemDBContext())
+        {
+            int adminId = int.Parse(mess);
+            var subjectDB = db.Subjects.Include(a => a.Admin).ToList();
+            foreach (var subjectItem in subjectDB)
+            {
+                if (subjectItem.Admin.Id == adminId)
+                {
+                    DTOSubject dtoSubject = new DTOSubject
+                    {
+                        SubjectId = subjectItem.SubjectId,
+                        SubjectName = subjectItem.SubjectName
+                    };
+                    subjects.Add(dtoSubject);
+                }    
+            }
+            SendObject(subjects);
+        }
+    }
 
-    // Реєстрація нового адміністратора
+    private void GetThemesForSubject(string mess)
+    {
+        List<DTOTheme> themes = new List<DTOTheme>();
+        using (var db = new TestingSystemDBContext())
+        {
+            int subjectId = int.Parse(mess);
+            var themeDB = db.Themes.Include(x => x.Subject).ToList();
+            foreach (var themeItem in themeDB)
+            {
+                if (themeItem.Subject.SubjectId == subjectId)
+                {
+                    DTOTheme dtoTheme = new DTOTheme
+                    {
+                        Id = themeItem.Id,
+                        SubjectId = subjectId,
+                        ThemeName = themeItem.ThemeName
+                    };
+                    themes.Add(dtoTheme);
+                }
+            }
+            SendObject(themes);
+        }
+    }
+        
+
+    private void GetTestsForTheme(string mess)
+    {
+        List<DTOTest> tests = new List<DTOTest>();
+        using (var db = new TestingSystemDBContext())
+        {
+            int testId = int.Parse(mess);
+            var testDB = db.Tests.Include(x => x.Theme).ToList();
+            var testSessionDB = db.TestSessions.Include(x => x.Test).ToList();
+            foreach (var testItem in testDB)
+            {
+                List<int> testSessionsId = new List<int>();
+                foreach (var testSession in testSessionDB)
+                {
+                    if (testSession.Test.TestId == testItem.TestId)
+                    {
+                        testSessionsId.Add(testSession.TestSessionId);
+                    }
+                }
+
+                if (testItem.Theme.Id == testId)
+                {
+                    DTOTest dtoTest = new DTOTest
+                    {
+                        TestId = testItem.TestId,
+                        TestName = testItem.TestName,
+                        MixAnswersOrder = testItem.MixAnswersOrder,
+                        MixQuestionsOrder = testItem.MixQuestionsOrder,
+                        TestCountScores = testItem.TestCountScores,
+                        TestTime = testItem.TestTime,
+                        ThemeId = testItem.Theme.Id,
+                        TestSessionsId = testSessionsId
+                    };
+                    tests.Add(dtoTest);
+                }
+            }
+            SendObject(tests);
+        }
+    }
+        // Реєстрація нового адміністратора
         private void AdminRegistration()
     {
       var obj = RecieveObject(); // отримуємо об'єкт адміністратора з клієнтської частини 
@@ -374,7 +472,7 @@ namespace TestingSystemServer
           var studentsDB = db.Students.Include(g => g.Group).Where(s => s.Group.GroupId == (int)obj);
           foreach (var student in studentsDB)
           {
-            DTOStudent dtoStudent = new DTOStudent { StudentId = student.StudentId, Name = student.Name, SurName = student.SurName, Login = student.Login, Password = student.Password, GroupId = student.Group.GroupId }; // Створюємо об'єкт студента для надсилання
+            DTOStudent dtoStudent = new DTOStudent { StudentId = student.StudentId, Name = student.Name, SurName = student.SurName, Login = student.Login, Password = student.Password, GroupId = student.Group.GroupId, GroupName = student.Group.GroupName }; // Створюємо об'єкт студента для надсилання
             students.Add(dtoStudent); // Додаємо студента до списку 
           }
 
