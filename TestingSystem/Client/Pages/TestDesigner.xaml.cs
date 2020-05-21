@@ -51,22 +51,34 @@ namespace Client.Pages
 
     void Button_Click_dgvs(object sender, RoutedEventArgs e)
     {
-
+      var dg = sender as DataGrid;
+      
       for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
         if (vis is DataGridRow)
         {
           if (((System.Windows.FrameworkElement)vis).DataContext is QueDTOQuestionstion)
           {
+            //if (((DTO.QueDTOQuestionstion)((System.Windows.FrameworkElement)vis).DataContext).)
             var id = ((DTO.QueDTOQuestionstion)((System.Windows.FrameworkElement)vis).DataContext).Id;
             if (id == 0)
             {
-              _client.SaveQuestion(((DTO.QueDTOQuestionstion)((System.Windows.FrameworkElement)vis).DataContext));
+              var new_id = _client.SaveQuestion(((DTO.QueDTOQuestionstion)((System.Windows.FrameworkElement)vis).DataContext));
+              ((DTO.QueDTOQuestionstion)((System.Windows.FrameworkElement)vis).DataContext).Id = new_id;
             } else
             {
               _client.UpdateQuestion(((DTO.QueDTOQuestionstion)((System.Windows.FrameworkElement)vis).DataContext));
             }
           }
         }
+    }
+
+    private void DataGrid_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
+    {
+      var datag = (DataGrid)sender;
+      var p = (QueDTOQuestionstion)datag.SelectedValue;
+      var p1 = (QueDTOQuestionstion)e.Row.Item;
+      //Debug.WriteLine(p.Name + ", " + p.Age);
+      //Debug.WriteLine(p1.Name + ", " + p1.Age);
     }
   }
 }

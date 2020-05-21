@@ -302,34 +302,34 @@ namespace Client
       return questions;
     }
 
-    public List<QueDTOQuestionstion> SaveQuestion(QueDTOQuestionstion question)
+    public int SaveQuestion(QueDTOQuestionstion question)
     {
       string message = "SaveQuestion:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
       SendObject(question); // надсилаємо список id тестів групи
-      List<QueDTOQuestionstion> questions = new List<QueDTOQuestionstion>(); // список 
       var obj = RecieveObject();// приймаємо відповідь з сервера       
-      if (obj is List<QueDTOQuestionstion>) // перевіряємо чи це список тестів
+      int newId = 0;
+      if (obj is int) // перевіряємо чи це список тестів
       {
-        questions = obj as List<QueDTOQuestionstion>; // приводимо до потрібного типу
+        return (int)obj; // приводимо до потрібного типу
       }
 
-      return questions;
+      return newId;
     }
 
-    public List<QueDTOQuestionstion> UpdateQuestion(QueDTOQuestionstion question)
+    public bool UpdateQuestion(QueDTOQuestionstion question)
     {
       string message = "UpdateQuestion:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
       SendObject(question); // надсилаємо список id тестів групи
-      List<QueDTOQuestionstion> questions = new List<QueDTOQuestionstion>(); // список 
-      var obj = RecieveObject();// приймаємо відповідь з сервера       
-      if (obj is List<QueDTOQuestionstion>) // перевіряємо чи це список тестів
+      var obj = RecieveObject();// приймаємо відповідь з сервера   
+      bool result = false;
+      if (obj is bool) // перевіряємо чи це список тестів
       {
-        questions = obj as List<QueDTOQuestionstion>; // приводимо до потрібного типу
+        result = (bool)obj; // приводимо до потрібного типу
       }
 
-      return questions;
+      return result;
     }
 
     public List<DTOQuestionType> GetQuestionTypes()

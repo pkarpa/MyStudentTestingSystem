@@ -8,8 +8,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="StudentPassTest" Background="AliceBlue">
 
-    <Grid>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25">Test</TextBlock>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="715,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+    <Grid Name="mainGrid">
+        <StackPanel Name="mainStackPanel">
+            <!--<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25">Test</TextBlock>
+            <Button Content="Button" HorizontalAlignment="Left" Margin="715,10,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>-->
+        </StackPanel>
     </Grid>
 </Page>

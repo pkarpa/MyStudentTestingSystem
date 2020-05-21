@@ -1,10 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace DTO
 {
     
     [Serializable] public class QueDTOQuestionstion
-    {
+  {
         public int Id { get; set; }
 
         public string QuestionText { get; set; }
@@ -20,5 +21,5 @@ namespace DTO
         public int ThemeId { get; set; }
 
         public int QuestionTypeId { get; set; }
-    }
+  }
 }

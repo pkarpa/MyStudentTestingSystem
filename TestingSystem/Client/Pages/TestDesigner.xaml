@@ -8,16 +8,16 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TestDesigner" Background="AliceBlue">
     <Grid x:Name="workGrid" Background="AliceBlue">
-        <DataGrid x:Name="testsGrid" Grid.Row="1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+        <DataGrid x:Name="testsGrid" Grid.Row="1" RowEditEnding="DataGrid_OnRowEditEnding" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
                 RowBackground="LightGray" AlternatingRowBackground="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}"/>
-                <DataGridTextColumn Header="Текст питання: " Binding="{Binding Path=QuestionText}" Width="auto" />
-                <DataGridTextColumn Header="Варіанти відповіді через ';'" Binding="{Binding Path=AnswerOption}" Width="auto" />
-                <DataGridTextColumn Header="Світлина" Binding="{Binding Path=QuestionImage}" Width="auto" />
-                <DataGridTextColumn Header="Вартість питання" Binding="{Binding Path=QuestionCountScores}" Width="auto" />
-                <DataGridTextColumn Header="Правильна відповідь" Binding="{Binding Path=QuestionAnswer}" Width="auto" />
-                <DataGridTextColumn Header="Тип питання" Binding="{Binding Path=QuestionTypeId}" Width="auto" />
+                <DataGridTextColumn Header="Текст питання: " Binding="{Binding Path=QuestionText, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Варіанти відповіді через ';'" Binding="{Binding Path=AnswerOption, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Світлина" Binding="{Binding Path=QuestionImage, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Вартість питання" Binding="{Binding Path=QuestionCountScores, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Правильна відповідь" Binding="{Binding Path=QuestionAnswer, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Тип питання" Binding="{Binding Path=QuestionTypeId, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

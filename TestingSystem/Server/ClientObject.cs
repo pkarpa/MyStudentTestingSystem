@@ -533,12 +533,14 @@ namespace TestingSystemServer
     private void SaveQuestion(string testId)
     {
       var obj = RecieveObject();
-      var result = false;
+      var result = 0;
       try
       {
         if (obj is QueDTOQuestionstion) // перевіряємо чи це справді об'єкт студента
         {
           QueDTOQuestionstion question = obj as QueDTOQuestionstion;
+          if (question.QuestionTypeId == 0)
+            question.QuestionTypeId = 1;
           using (var db = new TestingSystemDBContext())
           {
             var questionDB = new Question()
@@ -553,13 +555,15 @@ namespace TestingSystemServer
             };
             db.Questions.Add(questionDB);
             db.SaveChanges();
-            result = true;
+            db.Entry(questionDB).GetDatabaseValues();
+            var t = db.Entry(questionDB);
+            int id = questionDB.Id;
+            result = id;
           }
         }
       }
       catch (Exception e)
       {
-
       }
         SendObject(result);
     }

@@ -82,5 +82,22 @@ namespace Client.Pages
         var ex = exeption.Message;
       }
     }
+
+
+    private void ButtonClick_PassTest(object sender, MouseButtonEventArgs e)
+    {
+      DataGridRow row = sender as DataGridRow;
+      try
+      {
+        var rowId = ((DTO.DTOTest)row.DataContext).TestId;
+        NavigationWindow navWIN = new NavigationWindow();
+        navWIN.Content = new TestDesigner(client, rowId);
+        navWIN.Show();
+      }
+      catch (Exception exeption)
+      {
+        var ex = exeption.Message;
+      }
+    }
   }
 }
