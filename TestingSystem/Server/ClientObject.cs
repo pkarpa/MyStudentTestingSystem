@@ -147,10 +147,22 @@ namespace TestingSystemServer
             case "GetTestsForTheme":
                 GetTestsForTheme(message[1]);
                 Console.WriteLine(this.ClientObjectId + ": GetTestsForTheme");
-                break;
+                break; 
             case "GetSubjectsForAdmin":
                 GetSubjectsForAdmin(message[1]);
                 Console.WriteLine(this.ClientObjectId + ": GetSubjectsForAdmin");
+                break;
+            case "AddTestSession":
+                AddTestSession();
+                Console.WriteLine(this.ClientObjectId + ": AddTestSession");
+                break;
+            case "AddStudentsAnswers":
+                AddStudentsAnswers();
+                Console.WriteLine(this.ClientObjectId + ": AddStudentsAnswers");
+                break;
+            case "UpdateTestSession":
+                UpdateTestSession();
+                Console.WriteLine(this.ClientObjectId + ": UpdateTestSession");
                 break;
             case "LogOut":
               Console.WriteLine(this.ClientObjectId + ": LogOut");
@@ -267,6 +279,90 @@ namespace TestingSystemServer
     {
       server.RemoveConnection(ClientObjectId);
       this.Close();
+    }
+
+    public void AddTestSession()
+    {
+        var obj = RecieveObject();
+        int testSessionId = -1;
+        if (obj is DTOTestSession)
+        {
+            DTOTestSession dtoTestSession = obj as DTOTestSession;
+            using (var db = new TestingSystemDBContext())
+            {
+                Student student = db.Students.Include(x => x.Group).Include(d=>d.TestSessions).FirstOrDefault(s => s.StudentId == dtoTestSession.StudentId);
+                Test test = db.Tests.Include(x => x.Groups).Include(c=>c.Questions).Include(p=>p.Theme).FirstOrDefault(t => t.TestId == dtoTestSession.TestId);
+                TestSession testSession = new TestSession() { StartTime = dtoTestSession.StartTime, EndTime = DateTime.Today, Status = dtoTestSession.Status, Student = student, Test = test, Answers = null};
+                db.TestSessions.Add(testSession);
+                testSessionId = testSession.TestSessionId;
+                string answer = testSessionId.ToString();
+                SendMessage(answer);
+                db.SaveChanges();              
+            }
+        }
+        else 
+        {
+            Console.WriteLine("Something wrong with adding new test session!");
+        }
+    }
+
+    public void AddStudentsAnswers()
+    {
+        var obj = RecieveObject();
+        if (obj is List<DTOAnswer>)
+        {
+            List<DTOAnswer> dtoAnswers = obj as List<DTOAnswer>;
+            List<Answer> answers = new List<Answer>();
+            string message = null;
+            using (var db = new TestingSystemDBContext())
+            {
+                foreach (var item in dtoAnswers)
+                {
+                    Question question = db.Questions.FirstOrDefault(q => q.Id == item.QuestionId);
+                    TestSession testSession = db.TestSessions.FirstOrDefault(s => s.TestSessionId == item.TestSessionId);
+                    Answer answer = new Answer() { AnswerText = item.AnswerText, AnswerCorrects = item.AnswerCorrects, Question = question, TestSession = testSession };
+                    answers.Add(answer);
+                }
+                db.Answers.AddRange(answers);
+                foreach (var i in answers)
+                {
+                    message += i.AnswerId + " ";
+                }
+                db.SaveChanges();
+                SendMessage(message);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Something wrong with adding answers on test session!");
+        }
+    }
+
+    public void UpdateTestSession()
+    {
+        var obj = RecieveObject();
+        if (obj is DTOTestSession)
+        {
+            DTOTestSession dtoTestSession = obj as DTOTestSession;
+            List<Answer> answers = new List<Answer>();
+            using (var db = new TestingSystemDBContext())
+            {
+                    foreach (var i in dtoTestSession.AnswersId)
+                    {
+                        Answer answer = db.Answers.FirstOrDefault(a => a.AnswerId == i);
+                        answers.Add(answer);
+                    }
+                TestSession testSession = db.TestSessions.FirstOrDefault(t => t.TestSessionId == dtoTestSession.TestSessionId);
+                testSession.Status = dtoTestSession.Status;
+                testSession.EndTime = dtoTestSession.EndTime;
+                testSession.Answers = answers;
+                db.SaveChanges();
+            }
+        }
+        else
+        {
+            Console.WriteLine("Something wrong with update test session!");
+        }
     }
 
     private void GetTest(string mess)

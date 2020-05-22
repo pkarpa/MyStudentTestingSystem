@@ -52,6 +52,11 @@ namespace Client
       stream.Write(data, 0, data.Length); // Відправдяємо дані 
     }
 
+    public int GetClientId()
+    {
+        return id;
+    }
+
     // Метод який приймає повідомлення з серверної частини
     public string RecieveMessages()
     {
@@ -203,6 +208,31 @@ namespace Client
       return answer; // повертаємо відповідь
     }
 
+    public int AddTestSession(DTOTestSession testSession)
+    {
+            string message = "AddTestSession:";
+            SendMessage(message);
+            SendObject(testSession);
+            string answer = RecieveMessages();
+            int testSessionId = int.Parse(answer);
+            return testSessionId;
+    }
+        
+    public List<int> AddStudentsAnswers(List<DTOAnswer> _userAnswers)
+    {
+        string message = "AddStudentsAnswers:";
+        SendMessage(message);
+        SendObject(_userAnswers);
+        var answer = RecieveMessages().Split();
+        List<int> answersId = new List<int>();
+        foreach (var item in answer)
+        {
+            answersId.Add(int.Parse(item));
+        }
+
+        return answersId;
+    }
+
     // Метод який повертає групи студентів 
     public List<DTOGroup> GetGroups()
     {
@@ -330,6 +360,13 @@ namespace Client
       }
 
       return result;
+    }
+
+    public void UpdateTestSession(DTOTestSession _testSession)
+    {
+        string message = "UpdateTestSession:";
+        this.SendMessage(message);
+        this.SendObject(_testSession);
     }
 
     public List<DTOQuestionType> GetQuestionTypes()

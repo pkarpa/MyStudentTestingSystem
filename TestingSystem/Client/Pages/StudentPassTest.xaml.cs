@@ -28,10 +28,10 @@ namespace Client.Pages
       dtoTest = client.GetTest(testId);
       questions = client.GetQuestions(testId);
       questionType = client.GetQuestionTypes();
-      _testSession = new DTOTestSession();
+      _testSession = new DTOTestSession() { Status = "Continues", StartTime = DateTime.Now, TestId = testId, StudentId = cl.GetClientId() };
 
       //TODO
-      //var sessionid = client.AddTestSession(_testSession);
+      var sessionid = client.AddTestSession(_testSession);
       // 
       
 
@@ -67,15 +67,15 @@ namespace Client.Pages
           if (question.QuestionTypeId == 1)
           {
 
-            for (int k = 0; i < options.Length; k++)
+            for (int k = 0; k < options.Length; k++)
             {
-              RadioButton rb = new RadioButton() { Content = " " + options[k], IsChecked = i == 0 };
-              rb.Checked += (sender, args) =>
-              {
+              RadioButton rb = new RadioButton() { Content = " " + options[k], IsChecked = i != 0 };
+            rb.Checked += (sender, args) =>
+            {
                 answerDictionary[i] = k.ToString();
-              };
-              rb.Unchecked += (sender, args) => { /* Do stuff */ };
-              rb.Tag = k;
+            };
+            rb.Unchecked += (sender, args) => { /* Do stuff */ };
+            rb.Tag = k;
               mainStackPanel.HorizontalAlignment = HorizontalAlignment;
               stackOptions.Children.Add(rb);
             }
@@ -83,9 +83,9 @@ namespace Client.Pages
           {
             if (question.QuestionTypeId == 2)
             {
-              for (int k = 0; i < options.Length; k++)
+              for (int k = 0; k < options.Length; k++)
               {
-                CheckBox rb = new CheckBox() { Content = " " + options[k], IsChecked = i == 0 };
+                CheckBox rb = new CheckBox() { Content = " " + options[k], IsChecked = i != 0 };
                 rb.Checked += (sender, args) =>
                 {
                   answerDictionary[i] = k.ToString();
@@ -99,9 +99,9 @@ namespace Client.Pages
             {
               if (question.QuestionTypeId == 3)
               {
-                for (int k = 0; i < 2; k++)
+                for (int k = 0; k < 2; k++)
                 {
-                  RadioButton rb = new RadioButton() { Content = " " + options[k], IsChecked = i == 0 };
+                  RadioButton rb = new RadioButton() { Content = " " + options[k], IsChecked = i != 0 };
                   rb.Checked += (sender, args) =>
                   {
                     answerDictionary[i] = k.ToString();
@@ -155,9 +155,7 @@ namespace Client.Pages
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-      //TODO TIME etc.
-      //client.UpdateTestSession(_testSession);
-
+      _testSession.EndTime = DateTime.Now;
       var i = 0;
       foreach(var question in questions)
       {
@@ -172,9 +170,10 @@ namespace Client.Pages
       }
 
       //TODO
-      //client.AddStudentsAnswers(_userAnswers);
-
-
+      List<int> answersId = client.AddStudentsAnswers(_userAnswers);
+      //TODO TIME etc.
+      _testSession.AnswersId = answersId;
+      client.UpdateTestSession(_testSession);
       mw.Visibility = Visibility.Visible;
     }
   }
