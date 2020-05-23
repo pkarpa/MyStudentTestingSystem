@@ -88,7 +88,7 @@ namespace Client.Pages
                     {
                         int testId = ((DTO.DTOTest)((System.Windows.FrameworkElement)vis).DataContext).TestId;
                         NavigationWindow navWIN = new NavigationWindow();
-                        navWIN.Content = new StudentPassTest(client, testId, mw);
+                        navWIN.Content = new StudentPassTest(client, testId, mw, this);
                         navWIN.Show();
                         mw.Visibility = Visibility.Hidden;
                     }
