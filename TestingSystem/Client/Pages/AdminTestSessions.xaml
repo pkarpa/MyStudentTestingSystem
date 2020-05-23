@@ -19,13 +19,19 @@
             <Label Content="Тема:" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="16"/>
             <ComboBox x:Name="ThemeComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Height="25" SelectionChanged="ThemeComboBox_SelectionChanged"/>
             <Label Content="Тест:" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="16"/>
-            <ComboBox x:Name="TestComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Height="25"/>
+            <ComboBox x:Name="TestComboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="140" Height="25" SelectionChanged="TestComboBox_SelectionChanged"/>
         </StackPanel>
         <DataGrid x:Name="testsSessionsGrid" Grid.Row="1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
                 RowBackground="LightGray" AlternatingRowBackground="White">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Статус" Binding="{Binding Path=TestName}" Width="auto" />
-                <DataGridTextColumn Header="Студент" Binding="{Binding Path=ThemeId}" Width="auto" />
+                <DataGridTextColumn Header="Ceciя" Binding="{Binding Path=TestSessionId}" Width="auto" />
+                <DataGridTextColumn Header="Ім'я" Binding="{Binding Path=Name}" Width="auto" />
+                <DataGridTextColumn Header="Прізвище" Binding="{Binding Path=SurName}" Width="auto" />
+                <DataGridTextColumn Header="Група" Binding="{Binding Path=GroupName}" Width="auto" />
+                <DataGridTextColumn Header="Кількість питань" Binding="{Binding Path=QuestionCount}" Width="auto" />
+                <DataGridTextColumn Header="Правильні відповіді" Binding="{Binding Path=CountCorrectAnswers}" Width="auto" />
+                <DataGridTextColumn Header="Помилкові відповіді" Binding="{Binding Path=CountInCorrectAnswers}" Width="auto" />
+                <DataGridTextColumn Header="Кількість балів" Binding="{Binding Path=CountScores}" Width="auto" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

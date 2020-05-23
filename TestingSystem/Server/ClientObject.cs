@@ -163,6 +163,22 @@ namespace TestingSystemServer
             case "UpdateTestSession":
                 UpdateTestSession();
                 Console.WriteLine(this.ClientObjectId + ": UpdateTestSession");
+                break; 
+            case "GetTestSessionsForSomeTest":
+                GetTestSessionsForSomeTest(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetTestSessionsForSomeTest");
+                break;
+            case "GetStudents":
+                GetStudents();
+                Console.WriteLine(this.ClientObjectId + ": GetStudents");
+                break; 
+            case "GetQuestionsWithoutParams":
+                GetQuestionsWithoutParams();
+                Console.WriteLine(this.ClientObjectId + ": GetQuestionsWithoutParams");
+                break;
+            case "GetAnswersForTestSession":
+                GetAnswersForTestSession(message[1]);
+                Console.WriteLine(this.ClientObjectId + ": GetAnswersForTestSession");
                 break;
             case "LogOut":
               Console.WriteLine(this.ClientObjectId + ": LogOut");
@@ -251,6 +267,26 @@ namespace TestingSystemServer
         //Test test = db.Tests.FirstOrDefault(t => t.TestId == 1);
         //test.Groups.Add(group);
         //db.SaveChanges();
+
+        //QuestionType questionType = db.QuestionTypes.FirstOrDefault(x => x.Id == 1);
+        //Question question = new Question() { QuestionText = "1 + 2^2 = ", AnswerOption = "2;3;4;5;6", QuestionAnswer = "5", QuestionCountScores = 10, QuestionType = questionType, QuestionTypeId = questionType.Id };
+        //db.Questions.Add(question);
+        //db.SaveChanges();
+        //Question answ1Q = db.Questions.FirstOrDefault(x => x.Id == 1);
+        //Question answ2Q = db.Questions.FirstOrDefault(x => x.Id == 2);
+        //TestSession testSession = db.TestSessions.FirstOrDefault(x => x.TestSessionId == 1);
+        //Answer answer1 = new Answer() { AnswerCorrects = true, AnswerText = "1", Question = answ1Q, TestSession = testSession };
+        //Answer answer2 = new Answer() { AnswerCorrects = true, AnswerText = "5", Question = answ2Q, TestSession = testSession };
+        //db.Answers.Add(answer1);
+        //db.Answers.Add(answer2);
+        //db.SaveChanges();
+        //TestSession testSession = db.TestSessions.FirstOrDefault(x => x.TestSessionId == 8);
+        //Answer answer1 = db.Answers.Include(e => e.TestSession).FirstOrDefault(x => x.AnswerId == 2);
+        //Answer answer2 = db.Answers.Include(e => e.TestSession).FirstOrDefault(x => x.AnswerId == 3);
+        //answer1.TestSession = testSession;
+        //answer2.TestSession = testSession;
+        //db.SaveChanges();
+
         var admin = db.Administrators.FirstOrDefault(a => a.Login == login && a.Password == password);
         if (admin != null)
         {
@@ -281,7 +317,7 @@ namespace TestingSystemServer
       this.Close();
     }
 
-    public void AddTestSession()
+    private void AddTestSession()
     {
         var obj = RecieveObject();
         int testSessionId = -1;
@@ -306,7 +342,7 @@ namespace TestingSystemServer
         }
     }
 
-    public void AddStudentsAnswers()
+    private void AddStudentsAnswers()
     {
         var obj = RecieveObject();
         if (obj is List<DTOAnswer>)
@@ -338,7 +374,7 @@ namespace TestingSystemServer
         }
     }
 
-    public void UpdateTestSession()
+    private void UpdateTestSession()
     {
         var obj = RecieveObject();
         if (obj is DTOTestSession)
@@ -377,7 +413,84 @@ namespace TestingSystemServer
 
         SendObject(dtoTest);
     }
+
+    private void GetStudents()
+    {
         
+        List<DTOStudent> dtoStudents = new List<DTOStudent> (); 
+        using (var db = new TestingSystemDBContext())
+        {
+            var studentsDB = db.Students.Include(g => g.Group).ToList();
+            foreach (var item in studentsDB)
+            {
+                DTOStudent dtoStudent = new DTOStudent() { Name = item.Name, SurName = item.SurName, Login = item.Login, Password = item.Password, GroupId = item.Group.GroupId, GroupName = item.Group.GroupName, StudentId = item.StudentId };
+                dtoStudents.Add(dtoStudent);
+            }
+        }
+        SendObject(dtoStudents);
+    }
+        
+
+    private void GetAnswersForTestSession(string mess)
+    {
+        int testSessionId = int.Parse(mess);
+        List<DTOAnswer> dtoAnswers = new List<DTOAnswer>();
+        using (var db = new TestingSystemDBContext())
+        {
+            var answerDB = db.Answers.Include(x => x.Question).Include(s => s.TestSession).ToList();
+            foreach (var item in answerDB)
+            {
+                if(item.TestSession.TestSessionId == testSessionId)
+                {
+                    DTOAnswer dtoAnswer = new DTOAnswer() { AnswerId = item.AnswerId, AnswerCorrects = item.AnswerCorrects, TestSessionId = item.TestSession.TestSessionId, AnswerText = item.AnswerText, QuestionId = item.Question.Id };
+                    dtoAnswers.Add(dtoAnswer);
+                }
+                
+            }
+        }
+        SendObject(dtoAnswers);
+    }
+    private void GetQuestionsWithoutParams()
+    {
+
+        List<QueDTOQuestionstion> dtoQuestions = new List<QueDTOQuestionstion>();
+        using (var db = new TestingSystemDBContext())
+        {
+            var questionsDB = db.Questions.Include(x => x.QuestionType).ToList();
+            foreach (var item in questionsDB)
+            {
+                QueDTOQuestionstion dtoQuestion = new QueDTOQuestionstion() { Id = item.Id, AnswerOption = item.AnswerOption, QuestionAnswer = item.QuestionAnswer, QuestionCountScores = item.QuestionCountScores, QuestionText = item.QuestionText, QuestionTypeId = item.QuestionTypeId, ThemeId = item.QuestionTypeId };
+                dtoQuestions.Add(dtoQuestion);
+            }
+        }
+        SendObject(dtoQuestions);
+    }
+
+    private void GetTestSessionsForSomeTest(string message)
+    {
+        int testId = int.Parse(message);
+        List<DTOTestSession> dtoTestSessions = new List<DTOTestSession>();
+        using (var db = new TestingSystemDBContext())
+        {
+            var testSessionDB = db.TestSessions.Include(x => x.Test).Include(s => s.Student).Include(a => a.Answers).ToList();
+            foreach (var testSession in testSessionDB)
+            {
+                if (testSession.Test.TestId == testId)
+                {
+                    List<int> answersId = new List<int> ();
+                    foreach (var i in testSession.Answers)
+                    {
+                        answersId.Add(i.AnswerId);
+                    }
+                    DTOTestSession dtoTestSession = new DTOTestSession() { TestSessionId = testSession.TestSessionId, Status = testSession.Status, StartTime = testSession.StartTime, EndTime = testSession.EndTime, TestId = testSession.Test.TestId, StudentId = testSession.Student.StudentId, AnswersId = answersId };
+                    dtoTestSessions.Add(dtoTestSession);
+                }
+            }
+            SendObject(dtoTestSessions);
+        }
+    }
+
+
     private void GetSubjectsForAdmin(string mess)
     {
         List<DTOSubject> subjects = new List<DTOSubject>();
@@ -439,7 +552,7 @@ namespace TestingSystemServer
                 List<int> testSessionsId = new List<int>();
                 foreach (var testSession in testSessionDB)
                 {
-                    if (testSession.Test.TestId == testItem.TestId)
+                    if (testSession.Test.TestId != null && testSession.Test.TestId == testItem.TestId)
                     {
                         testSessionsId.Add(testSession.TestSessionId);
                     }

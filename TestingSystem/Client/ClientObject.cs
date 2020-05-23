@@ -241,6 +241,43 @@ namespace Client
       List<DTOGroup> groups = (List<DTOGroup>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
       return groups;
     }
+        
+    public List<DTOStudent> GetStudents()
+    {
+        string message = "GetStudents:";
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        List<DTOStudent> students = (List<DTOStudent>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return students;
+    }
+
+    public List<DTOAnswer> GetAnswersForTestSession(int testSessionId)
+    {
+        string message = "GetAnswersForTestSession:" + testSessionId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        List<DTOAnswer> answers = (List<DTOAnswer>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return answers;
+    }
+
+    public List<QueDTOQuestionstion> GetQuestionsWithoutParams()
+    {
+        string message = "GetQuestionsWithoutParams:";
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        List<QueDTOQuestionstion> questions = (List<QueDTOQuestionstion>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return questions;
+    }
+
+    public List<DTOTestSession> GetTestSessionsForSomeTest(int testId)
+    {
+        List<DTOTestSession> dtoTestSessions = new List<DTOTestSession> ();
+        string message = "GetTestSessionsForSomeTest:" + testId;
+        SendMessage(message);
+        var obj = RecieveObject();
+        if (obj is List<DTOTestSession>)
+        {
+            dtoTestSessions = obj as List<DTOTestSession>;
+        }
+        return dtoTestSessions;
+    }
 
     // Метод який повертає групи студентів 
     public List<DTOSubject> GetSubjects()
@@ -271,8 +308,8 @@ namespace Client
     {
         string message = "GetTestsForTheme:" + themeId;
         SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
-        List<DTOTest> themes = (List<DTOTest>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
-        return themes;
+        List<DTOTest> tests = (List<DTOTest>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return tests;
     }
 
         // Метод який видаляє групу за її id

@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnswerModel.cs" />
     <Compile Include="DTOAdministrator.cs" />
     <Compile Include="DTOAnswer.cs" />
     <Compile Include="DTOGroup.cs" />

@@ -26,12 +26,16 @@ namespace Client.Pages
         List<DTOTheme> themes = null;
         List<DTOTest> tests = null;
         List<DTOTestSession> testSessions = null;
+        List<DTOStudent> students = null;
+        List<QueDTOQuestionstion> questions = null;
+        List<AnswerModel> answerModels = null;
 
         public AdminTestSessions(ClientObject cl)
         {
             InitializeComponent();
             client = cl;
             AddItemsToSubjectComboBox();
+            answerModels = new List<AnswerModel>();
             //SetListOfTest();
 
             //Style rowStyle = new Style(typeof(DataGridRow));
@@ -92,11 +96,11 @@ namespace Client.Pages
         {
             tests = client.GetTestsForTheme(themeId);
             TestComboBox.Items.Clear();
-            if (themes.Count > 0)
+            if (tests.Count > 0)
             {
-                foreach (DTOTheme item in themes)
+                foreach (DTOTest item in tests)
                 {
-                    ComboBoxItem gnItem = new ComboBoxItem() { Content = item.ThemeName };
+                    ComboBoxItem gnItem = new ComboBoxItem() { Content = item.TestName };
                     TestComboBox.Items.Add(gnItem);
                 }
             }
@@ -107,12 +111,49 @@ namespace Client.Pages
             }
         }
 
+        public void AddTestSessions(int testId)
+        {
+            testSessions = client.GetTestSessionsForSomeTest(testId);
+            students = client.GetStudents();
+            questions = client.GetQuestionsWithoutParams();
+            foreach (var testSession in testSessions)
+            {
+                AnswerModel answerModel = new AnswerModel();
+                answerModel.TestSessionId = testSession.TestSessionId;
+                answerModel.Name = students.FirstOrDefault(x => x.StudentId == testSession.StudentId).Name;
+                answerModel.SurName = students.FirstOrDefault(x => x.StudentId == testSession.StudentId).SurName;
+                answerModel.GroupName = students.FirstOrDefault(x => x.StudentId == testSession.StudentId).GroupName;
+                List<DTOAnswer> answers = client.GetAnswersForTestSession(testSession.TestSessionId).ToList();
+                answerModel.QuestionCount = answers.Count;
+                answers = answers.Where(x => x.AnswerCorrects == true).ToList();
+                answerModel.CountCorrectAnswers = answers.Count;
+                answerModel.CountInCorrectAnswers = answerModel.QuestionCount - answerModel.CountCorrectAnswers;
+                foreach (var item in answers)
+                {
+                    answerModel.CountScores += questions.FirstOrDefault(q => q.Id == item.QuestionId).QuestionCountScores;
+                }
+                answerModels.Add(answerModel);
+            }
+
+            if (answerModels.Count != 0)
+                testsSessionsGrid.ItemsSource = answerModels;
+
+        }
+
         private void ThemeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var themeComboBox = sender as ComboBox;
             var selectTheme = themeComboBox.SelectedIndex;
             int themeId = themes[selectTheme].Id;
             this.AddItemsToTestComboBox(themeId);
+        }
+
+        private void TestComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var testComboBox = sender as ComboBox;
+            var selectTest = testComboBox.SelectedIndex;
+            int themeId = themes[selectTest].Id;
+            this.AddTestSessions(themeId);
         }
 
         //public void SetListOfTest()
