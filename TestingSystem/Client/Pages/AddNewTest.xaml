@@ -1,0 +1,42 @@
+﻿<Page x:Class="Client.Pages.AddNewTest"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="380"
+      Title="AddNewTest" Background="AliceBlue" Width="793.6">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="425*"/>
+            <ColumnDefinition Width="369*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="88*"/>
+            <RowDefinition Height="197*"/>
+            <RowDefinition Height="95*"/>
+        </Grid.RowDefinitions>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="50" Width="188" IsEnabled="False" Margin="20,21,0,17">Новий тест</TextBlock>
+        <Label Content="Предмет:" HorizontalAlignment="Left" Margin="36,2,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="82" RenderTransformOrigin="0.383,0.077" Grid.Row="1"/>
+        <ComboBox x:Name="SubjectComboBox" HorizontalAlignment="Left" Margin="123,5,0,0" VerticalAlignment="Top" Width="140" Height="25" SelectionChanged="SubjectComboBox_SelectionChanged" Grid.Row="1"/>
+        <Label Content="Тема:" HorizontalAlignment="Left" Margin="65,40,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="53" Grid.Row="1"/>
+        <ComboBox x:Name="ThemeComboBox" HorizontalAlignment="Left" Margin="123,45,0,0" VerticalAlignment="Top" Width="140" Height="25" SelectionChanged="ThemeComboBox_SelectionChanged" Grid.Row="1"/>
+        <Label Content="Назва:" HorizontalAlignment="Left" Margin="61,76,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="59" Grid.Row="1"/>
+        <TextBox x:Name="TestName" HorizontalAlignment="Left" Margin="125,83,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+        <CheckBox x:Name="MixQuestionsCheckBox" Content="Змінний порядок питань" HorizontalAlignment="Left" Margin="29,164,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="MixQuestionsCheckBox_Checked" Unchecked="MixQuestionsCheckBox_Unchecked" Height="15" Width="179"/>
+        <CheckBox x:Name="MixAnswersCheckBox" Content="Змінний порядок відповідей" HorizontalAlignment="Left" Margin="237,164,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="MixAnswersCheckBox_Checked" Unchecked="MixAnswersCheckBox_Unchecked" Height="15" Width="178"/>
+
+        <Button x:Name="CreateTestButton" Background="Blue" FontSize="12" Foreground="White" Content="Створити" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="68" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="252.2,32.2,0,0" Click="CreateTestButton_Click" Grid.Row="2" Grid.Column="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Label Content="Тривалість:" HorizontalAlignment="Left" Margin="29,114,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="91" Grid.Row="1"/>
+        <TextBox x:Name="TestTime" HorizontalAlignment="Left" Margin="125,121,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+        <Label Content="хв" HorizontalAlignment="Left" Margin="268,114,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="32" Grid.Row="1"/>
+    </Grid>
+</Page>

@@ -1,0 +1,42 @@
+﻿<Page x:Class="Client.Pages.AddNewQuestion"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="380"
+      Title="AddQuestionTest" Background="AliceBlue" Width="793.6">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="475*"/>
+            <ColumnDefinition Width="318*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="88*"/>
+            <RowDefinition Height="197*"/>
+            <RowDefinition Height="95*"/>
+        </Grid.RowDefinitions>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="50" Width="243" IsEnabled="False" Margin="20,21,0,17">Нове питання</TextBlock>
+        <Label Content="Тип питання:" HorizontalAlignment="Left" Margin="105,0,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="103" RenderTransformOrigin="0.383,0.077" Grid.Row="1"/>
+        <ComboBox x:Name="QuestionTypeComboBox" HorizontalAlignment="Left" Margin="219,5,0,0" VerticalAlignment="Top" Width="140" Height="25" SelectionChanged="QuestionTypeComboBox_SelectionChanged" Grid.Row="1"/>
+        <Label Content="Текст:" HorizontalAlignment="Left" Margin="156,41,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="52" Grid.Row="1"/>
+        <TextBox x:Name="QuestionText" HorizontalAlignment="Left" Margin="221,47,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+        <Label Content="Варіанти відповідей:" HorizontalAlignment="Left" Margin="51,76,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="165" Grid.Row="1"/>
+        <TextBox x:Name="AnswerOptions" HorizontalAlignment="Left" Margin="221,83,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+
+        <Button x:Name="CreateTestButton" Background="Blue" FontSize="12" Foreground="White" Content="Створити" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="68" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="206.8,37.2,0,0" Click="CreateTestButton_Click" Grid.Row="2" Grid.Column="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <Label Content="Правильна відповідь:" HorizontalAlignment="Left" Margin="40,114,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="168" Grid.Row="1"/>
+        <TextBox x:Name="CorrectAnswer" HorizontalAlignment="Left" Margin="221,121,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+        <Label Content="Вартість питання:" HorizontalAlignment="Left" Margin="71,157,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="137" Grid.Row="1"/>
+        <TextBox x:Name="QuestionCountScores" HorizontalAlignment="Left" Margin="221,164,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+
+    </Grid>
+</Page>

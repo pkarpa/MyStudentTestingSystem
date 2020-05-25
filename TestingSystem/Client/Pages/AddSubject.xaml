@@ -1,0 +1,34 @@
+﻿<Page x:Class="Client.Pages.AddSubject"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Client.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="380"
+      Title="AddNewSubject" Background="AliceBlue" Width="793.6">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="475*"/>
+            <ColumnDefinition Width="318*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="88*"/>
+            <RowDefinition Height="197*"/>
+            <RowDefinition Height="95*"/>
+        </Grid.RowDefinitions>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="50" Width="268" IsEnabled="False" Margin="20,21,0,17">Новий предмет</TextBlock>
+        <Label Content="Назва:" HorizontalAlignment="Left" Margin="48,26,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="52" Grid.Row="1"/>
+        <TextBox x:Name="SubjectName" HorizontalAlignment="Left" Margin="113,32,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="True" Grid.Row="1"/>
+
+        <Button x:Name="CreateSubjectButton" Background="Blue" FontSize="12" Foreground="White" Content="Створити" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="68" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="206.8,37.2,0,0" Click="CreateSubjectButton_Click" Grid.Row="2" Grid.Column="1">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="8"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+    </Grid>
+</Page>
