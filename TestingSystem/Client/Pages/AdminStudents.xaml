@@ -25,6 +25,20 @@
                 <DataGridTextColumn Header="Логін" Binding="{Binding Path=Login}" Width="auto" />
                 <DataGridTextColumn Header="Пароль" Binding="{Binding Path=Password}" Width="auto" />
                 <DataGridTextColumn Header="Група" Binding="{Binding Path=GroupName}" Width="auto" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="ChangeStudent" Click="ChangeStudent_Click">Редагувати</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                <DataGridTemplateColumn.CellTemplate>
+                    <DataTemplate>
+                            <Button x:Name="DeleteStudent" Click="ChangeStudent_Click">Видалити</Button>
+                    </DataTemplate>
+                </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

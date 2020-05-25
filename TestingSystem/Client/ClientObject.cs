@@ -212,7 +212,9 @@ namespace Client
     {
             string message = "AddTestSession:";
             SendMessage(message);
+            Thread.Sleep(1000);
             SendObject(testSession);
+            Thread.Sleep(1000);
             string answer = RecieveMessages();
             int testSessionId = int.Parse(answer);
             return testSessionId;
@@ -222,8 +224,11 @@ namespace Client
     {
         string message = "AddStudentsAnswers:";
         SendMessage(message);
+        Thread.Sleep(300);
         SendObject(_userAnswers);
+        Thread.Sleep(700);
         var answer = RecieveMessages().Split();
+        Thread.Sleep(1000);
         List<int> answersId = new List<int>();
         foreach (var item in answer)
         {
@@ -231,6 +236,45 @@ namespace Client
         }
 
         return answersId;
+    }
+        
+    public string AddSubject(string subjectName)
+    {
+        string message = "AddSubject:" + id + " " + subjectName;
+        SendMessage(message);
+        Thread.Sleep(700);
+        string answer = RecieveMessages();
+        return answer;
+    }
+
+    public string AddTheme(int subjectId, string themeName)
+    {
+        string message = "AddTheme:" + subjectId + "_" + themeName;
+        SendMessage(message);
+        Thread.Sleep(700);
+        string answer = RecieveMessages();
+        return answer;
+    }
+        
+    public void DeleteTheme(int themeId)
+    {
+        string message = "DeleteTheme:" + themeId;
+        SendMessage(message);
+        Thread.Sleep(3000);
+    }
+        
+
+    public void DeleteTest(int testId)
+    {
+        string message = "DeleteTest:" + testId;
+        SendMessage(message);
+        Thread.Sleep(3000);
+    }
+    public void DeleteSubject(int subjectId)
+    {
+        string message = "DeleteSubject:" + subjectId;
+        SendMessage(message);
+        Thread.Sleep(3000);
     }
 
     // Метод який повертає групи студентів 
@@ -241,7 +285,15 @@ namespace Client
       List<DTOGroup> groups = (List<DTOGroup>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
       return groups;
     }
-        
+
+    public string GetTestName(int testId)
+    {
+        string message = "GetTestName:" + testId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        string answer = RecieveMessages();
+        return answer;
+    }
+
     public List<DTOStudent> GetStudents()
     {
         string message = "GetStudents:";
@@ -250,11 +302,30 @@ namespace Client
         return students;
     }
 
+    public void AddTest(DTOTest test)
+    {
+        string message = "AddTest:";
+        SendMessage(message);
+        Thread.Sleep(700);
+        SendObject(test);
+    }
+
+
     public List<DTOAnswer> GetAnswersForTestSession(int testSessionId)
     {
         string message = "GetAnswersForTestSession:" + testSessionId;
         SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        Thread.Sleep(700);
         List<DTOAnswer> answers = (List<DTOAnswer>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
+        return answers;
+    }
+
+    public List<DTOTestSession> GetTestSessionsForSomeStudent()
+    {
+        string message = "GetTestSessionsForSomeStudent:" + id;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        Thread.Sleep(700);
+        List<DTOTestSession> answers = (List<DTOTestSession>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
         return answers;
     }
 
@@ -262,6 +333,7 @@ namespace Client
     {
         string message = "GetQuestionsWithoutParams:";
         SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        Thread.Sleep(700);
         List<QueDTOQuestionstion> questions = (List<QueDTOQuestionstion>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
         return questions;
     }
@@ -269,9 +341,11 @@ namespace Client
     public List<DTOTestSession> GetTestSessionsForSomeTest(int testId)
     {
         List<DTOTestSession> dtoTestSessions = new List<DTOTestSession> ();
-        string message = "GetTestSessionsForSomeTest:" + testId;
+        string message = "GetTestSessionsForNeededTest:" + testId;
         SendMessage(message);
+        Thread.Sleep(700);
         var obj = RecieveObject();
+        Thread.Sleep(700);
         if (obj is List<DTOTestSession>)
         {
             dtoTestSessions = obj as List<DTOTestSession>;
@@ -284,6 +358,7 @@ namespace Client
     {
       string message = "GetSubjects:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+      Thread.Sleep(700);
       List<DTOSubject> groups = (List<DTOSubject>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
       return groups;
     }
@@ -292,6 +367,7 @@ namespace Client
     {
         string message = "GetSubjectsForAdmin:" + id;
         SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        Thread.Sleep(700);
         List<DTOSubject> subjects = (List<DTOSubject>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
         return subjects;
     }
@@ -300,6 +376,7 @@ namespace Client
     {
         string message = "GetThemesForSubject:" + subjectId;
         SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        Thread.Sleep(700);
         List<DTOTheme> themes = (List<DTOTheme>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
         return themes;
     }
@@ -308,6 +385,7 @@ namespace Client
     {
         string message = "GetTestsForTheme:" + themeId;
         SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання груп
+        Thread.Sleep(700);
         List<DTOTest> tests = (List<DTOTest>)RecieveObject(); // приймаємо відповідь з сервера в вигляді списку груп
         return tests;
     }
@@ -317,6 +395,7 @@ namespace Client
     {
       string message = "DeleteGroup:" + id;
       SendMessage(message); // надсилаємо повідомлення на серверну частину про видалення групи
+      Thread.Sleep(700);
       string answer = RecieveMessages(); // приймаємо відповідь з сервера
 
       return answer;
@@ -327,7 +406,9 @@ namespace Client
     {
       string message = "GetGroupStudents:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання студентів
+      Thread.Sleep(700);
       SendObject(groupId);  // надсилаємо список id студентів групи
+      Thread.Sleep(700);
       List<DTOStudent> students = new List<DTOStudent>(); // список студентів групи         
       var obj = RecieveObject();  // приймаємо відповідь з сервера
       if (obj is List<DTOStudent>) // перевіряємо чи це список студентів
@@ -343,9 +424,11 @@ namespace Client
     {
       string message = "GetGroupTests:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання тестів
-      SendObject(testsId); // надсилаємо список id тестів групи
+        Thread.Sleep(700);
+        SendObject(testsId); // надсилаємо список id тестів групи
       List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
-      var obj = RecieveObject();// приймаємо відповідь з сервера       
+        Thread.Sleep(700);
+        var obj = RecieveObject();// приймаємо відповідь з сервера       
       if (obj is List<DTOTest>) // перевіряємо чи це список тестів
       {
         tests = obj as List<DTOTest>; // приводимо до потрібного типу
@@ -354,12 +437,29 @@ namespace Client
       return tests;
     }
 
+    public List<DTOTest> GetListAvaibleTests(int groupId, int themeId)
+    {
+        string message = "GetListAvaibleTests:" + groupId + " " + themeId;
+        SendMessage(message);
+        Thread.Sleep(700);
+        List<DTOTest> avaibleTests = new List<DTOTest>(); // список студентів групи         
+        var obj = RecieveObject();  // приймаємо відповідь з сервера
+        if (obj is List<DTOTest>) // перевіряємо чи це список студентів
+        {
+            avaibleTests = obj as List<DTOTest>; // приводимо до потрібного типу
+        }
+
+        return avaibleTests;
+    }
+
     public List<QueDTOQuestionstion> GetQuestions(int testsId)
     {
       string message = "GetQuestions:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      Thread.Sleep(700);
       SendObject(testsId); // надсилаємо список id тестів групи
       List<QueDTOQuestionstion> questions = new List<QueDTOQuestionstion>(); // список 
+      Thread.Sleep(700);
       var obj = RecieveObject();// приймаємо відповідь з сервера       
       if (obj is List<QueDTOQuestionstion>) // перевіряємо чи це список тестів
       {
@@ -369,11 +469,23 @@ namespace Client
       return questions;
     }
 
+    public string AddQuestionIdInTest(int testId, int questionId)
+    {
+        string message = "AddQuestionIdInTest:" + testId + " " + questionId;
+        Thread.Sleep(1010);
+        SendMessage(message);
+        Thread.Sleep(1010);
+        string answer = RecieveMessages();
+            return answer;
+    }
+
     public int SaveQuestion(QueDTOQuestionstion question)
     {
       string message = "SaveQuestion:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      Thread.Sleep(1010);
       SendObject(question); // надсилаємо список id тестів групи
+      Thread.Sleep(1010);
       var obj = RecieveObject();// приймаємо відповідь з сервера       
       int newId = 0;
       if (obj is int) // перевіряємо чи це список тестів
@@ -388,7 +500,9 @@ namespace Client
     {
       string message = "UpdateQuestion:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      Thread.Sleep(700);
       SendObject(question); // надсилаємо список id тестів групи
+      Thread.Sleep(700);
       var obj = RecieveObject();// приймаємо відповідь з сервера   
       bool result = false;
       if (obj is bool) // перевіряємо чи це список тестів
@@ -403,7 +517,9 @@ namespace Client
     {
         string message = "UpdateTestSession:";
         this.SendMessage(message);
+        Thread.Sleep(300);
         this.SendObject(_testSession);
+        Thread.Sleep(700);
     }
 
     public List<DTOQuestionType> GetQuestionTypes()
@@ -411,6 +527,7 @@ namespace Client
       string message = "GetQuestionTypes:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
       List<DTOQuestionType> questionsTypes = new List<DTOQuestionType>(); // список 
+      Thread.Sleep(700);
       var obj = RecieveObject();// приймаємо відповідь з сервера       
       if (obj is List<DTOQuestionType>) // перевіряємо чи це список тестів
       {
@@ -426,6 +543,7 @@ namespace Client
       string message = "GetAllTests:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання тестів
       List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
+      Thread.Sleep(700);
       var obj = RecieveObject();// приймаємо відповідь з сервера       
       if (obj is List<DTOTest>) // перевіряємо чи це список тестів
       {
@@ -440,6 +558,7 @@ namespace Client
         DTOTest dtoTest = null ;
         string message = "GetTest:" + testId;
         SendMessage(message);
+        Thread.Sleep(700);
         var obj = RecieveObject();
         if(obj is DTOTest)
         {
@@ -452,6 +571,7 @@ namespace Client
     {
       string message = "GetTheme:";
       SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання тестів
+      Thread.Sleep(700);
       List<DTOTheme> theme = new List<DTOTheme>(); // список тестів групи
       var obj = RecieveObject();// приймаємо відповідь з сервера       
       if (obj is List<DTOTheme>) // перевіряємо чи це список тестів
@@ -466,6 +586,7 @@ namespace Client
     {
         string message = "GetTestsForSomeGroup:" + id;
         SendMessage(message);
+        Thread.Sleep(700);
         List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
         var obj = RecieveObject();// приймаємо відповідь з сервера       
         if (obj is List<DTOTest>) // перевіряємо чи це список тестів
@@ -476,25 +597,27 @@ namespace Client
         return tests;
     }
 
-        public List<DTOTest> GetTestsForSomeAdmin()
+    public List<DTOTest> GetTestsForSomeAdmin()
+    {
+        string message = "GetTestsForSomeAdmin:" + id;
+        SendMessage(message);
+        Thread.Sleep(700);
+        List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
+        var obj = RecieveObject();// приймаємо відповідь з сервера       
+        if (obj is List<DTOTest>) // перевіряємо чи це список тестів
         {
-            string message = "GetTestsForSomeAdmin:" + id;
-            SendMessage(message);
-            List<DTOTest> tests = new List<DTOTest>(); // список тестів групи
-            var obj = RecieveObject();// приймаємо відповідь з сервера       
-            if (obj is List<DTOTest>) // перевіряємо чи це список тестів
-            {
-                tests = obj as List<DTOTest>; // приводимо до потрібного типу
-            }
-
-            return tests;
+            tests = obj as List<DTOTest>; // приводимо до потрібного типу
         }
 
+        return tests;
+    }
+
         // Метод який видаляє студента з групи за його id
-        public string DeleteStudentFromGroup(int id)
+    public string DeleteStudentFromGroup(int id)
     {
       string mess = "DeleteStudentFromGroup:" + id;
       SendMessage(mess); // надсилаємо повідомлення на серверну частину про видалення студента з групи
+      Thread.Sleep(700);
       string answer = RecieveMessages(); // приймаємо відповідь з сервера 
 
       return answer;
@@ -512,16 +635,56 @@ namespace Client
     {
       string message = "AddGroup:" + name;
       SendMessage(message); // надсилаємо повідомлення на серверну частину про створення нової групи
+      Thread.Sleep(700);
       string answer = RecieveMessages();  // приймаємо відповідь з сервера 
 
       return answer;
     }
+        
+    public string AddStudentToGroup(int studentId, int groupId)
+    {
+        string message = "AddStudentToGroup:" + groupId + " " + studentId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину про створення нової групи
+        Thread.Sleep(700);
+        string answer = RecieveMessages();  // приймаємо відповідь з сервера 
+        return answer;
+    }
 
-    // Метод який повертає інформацію про адміністратора
+    public string DeleteTestFromGroup(int testId, int groupId)
+    {
+        string message = "DeleteTestFromGroup:" + groupId + " " + testId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину про створення нової групи
+        Thread.Sleep(700);
+        string answer = RecieveMessages();  // приймаємо відповідь з сервера 
+        return answer;
+    }
+
+    public string EditStudent(DTOStudent student)
+    {
+         string message = "EditStudent:";
+         SendMessage(message);
+         Thread.Sleep(700);
+         SendObject(student);
+         Thread.Sleep(700);
+         string answer = RecieveMessages();
+         return answer;
+    }
+
+    public string AddTestToGroup(int testId, int groupId)
+    {
+        string message = "AddTestToGroup:" + groupId + " " + testId;
+        SendMessage(message); // надсилаємо повідомлення на серверну частину про створення нової групи
+        Thread.Sleep(700);
+        string answer = RecieveMessages();  // приймаємо відповідь з сервера 
+        return answer;
+    }
+
+        // Метод який повертає інформацію про адміністратора
     public DTOAdministrator GetInfoAboutAdmin()
     {
       string message = "InfoAboutAdmin:";
       SendMessage(message + id); // надсилаємо повідомлення на серверну частину для того щоб отримати інформацію про адміністратора
+      Thread.Sleep(700);
       var obj = RecieveObject();  // приймаємо відповідь з сервера 
       DTOAdministrator administrator = null;
       if (obj is DTOAdministrator) // перевіряємо чи це справді DTOAdministrator
@@ -537,6 +700,7 @@ namespace Client
     {
       string message = "InfoAboutStudent:";
       SendMessage(message + id); // надсилаємо повідомлення на серверну частину для того щоб отримати інформацію про адміністратора
+      Thread.Sleep(700);
       var obj = RecieveObject();  // приймаємо відповідь з сервера 
       DTOStudent student = null;
       if (obj is DTOStudent) // перевіряємо чи це справді DTOAdministrator

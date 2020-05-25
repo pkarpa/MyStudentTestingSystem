@@ -36,15 +36,39 @@ namespace Client.Pages
             student = client.GetInfoAboutStudent();
             if (student != null)
             {
-                //name = administrator.Name;
-                //login = administrator.Login;
-                //password = administrator.Password;
                 StudentName.Text = student.Name;
                 StudentSurName.Text = student.SurName;
-                StudentGroup.Text = student.GroupName;
                 StudentLogin.Text = student.Login;
-                StudentPassword.Password = student.Password;
-                StudentPasswordTextBox.Text = student.Password;
+                StudentPassword.Text = student.Password;
+            }
+        }
+
+        private void ChangeButton_Click(object sender, RoutedEventArgs e)
+        {
+            StudentName.IsEnabled = true;
+            StudentSurName.IsEnabled = true;
+            StudentLogin.IsEnabled = true;
+            StudentPassword.IsEnabled = true;
+            SaveButton.IsEnabled = true;
+            ChangeButton.IsEnabled = false;
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            StudentName.IsEnabled = false;
+            StudentSurName.IsEnabled = false;
+            StudentLogin.IsEnabled = false;
+            StudentPassword.IsEnabled = false;
+            SaveButton.IsEnabled = false;
+            ChangeButton.IsEnabled = true;
+
+            student.Name = StudentName.Text;
+            student.SurName = StudentSurName.Text;
+            student.Login = StudentLogin.Text;
+            student.Password = StudentPassword.Text;
+            string answer = client.EditStudent(student);
+            if (answer == "succesfull")
+            {
             }
         }
     }

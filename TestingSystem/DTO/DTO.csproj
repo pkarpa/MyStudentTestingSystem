@@ -47,6 +47,8 @@
     <Compile Include="DTOTestSession.cs" />
     <Compile Include="DTOTheme.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StudentResultModel.cs" />
+    <Compile Include="TestViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -56,11 +56,38 @@
     <Compile Include="ChangeUserPassword.xaml.cs">
       <DependentUpon>ChangeUserPassword.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AddNewQuestion.xaml.cs">
+      <DependentUpon>AddNewQuestion.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddNewStudentsGroup.xaml.cs">
+      <DependentUpon>AddNewStudentsGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddNewTest.xaml.cs">
+      <DependentUpon>AddNewTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddStudentToGroup.xaml.cs">
+      <DependentUpon>AddStudentToGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddSubject.xaml.cs">
+      <DependentUpon>AddSubject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddTestForSomeGroup.xaml.cs">
+      <DependentUpon>AddTestForSomeGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AddTheme.xaml.cs">
+      <DependentUpon>AddTheme.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminAccount.xaml.cs">
       <DependentUpon>AdminAccount.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminChangeStudent.xaml.cs">
+      <DependentUpon>AdminChangeStudent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminGroups.xaml.cs">
       <DependentUpon>AdminGroups.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AdminStudentGroups.xaml.cs">
+      <DependentUpon>AdminStudentGroups.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AdminStudents.xaml.cs">
       <DependentUpon>AdminStudents.xaml</DependentUpon>
@@ -71,11 +98,23 @@
     <Compile Include="Pages\AdminTest.xaml.cs">
       <DependentUpon>AdminTest.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminTestQuestions.xaml.cs">
+      <DependentUpon>AdminTestQuestions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AdminTests.xaml.cs">
       <DependentUpon>AdminTests.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\AdminThemes.xaml.cs">
+      <DependentUpon>AdminThemes.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StudentPassTest.xaml.cs">
       <DependentUpon>StudentPassTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StudentResults.xaml.cs">
+      <DependentUpon>StudentResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StudentsSomeGroup.xaml.cs">
+      <DependentUpon>StudentsSomeGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StudentTests.xaml.cs">
       <DependentUpon>StudentTests.xaml</DependentUpon>
@@ -88,6 +127,9 @@
     </Compile>
     <Compile Include="Pages\StudentAccount.xaml.cs">
       <DependentUpon>StudentAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestSomeGroup.xaml.cs">
+      <DependentUpon>TestSomeGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="RegistrarionWindow.xaml.cs">
       <DependentUpon>RegistrarionWindow.xaml</DependentUpon>
@@ -116,11 +158,47 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AddNewQuestion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddNewStudentsGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddNewTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddStudentToGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddSubject.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddTestForSomeGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AddTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AdminAccount.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\AdminChangeStudent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AdminGroups.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AdminStudentGroups.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -136,11 +214,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\AdminTestQuestions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AdminTests.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\AdminThemes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\StudentPassTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StudentResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StudentsSomeGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\StudentAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\TestSomeGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

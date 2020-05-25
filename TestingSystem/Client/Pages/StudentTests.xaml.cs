@@ -26,42 +26,66 @@ namespace Client.Pages
         ClientObject client;
         List<DTOTest> tests = null;
         List<DTOTheme> theme = null;
+        List<DTOTest> availableTests = null;
+        List<DTOTestSession> testSessions = null;
         Window mw;
-        public StudentTests(ClientObject cl, Window _mw)
+        Frame main = null;
+        public StudentTests(ClientObject cl, Window _mw, Frame _mn)
         {
             InitializeComponent();
             client = cl;
             mw = _mw;
-            AddItemsToComboBox();
+            main = _mn;
+            availableTests = new List<DTOTest>();
+            testSessions = client.GetTestSessionsForSomeStudent();
+            //AddItemsToComboBox();
             SetListOfTest();
         }
 
         // додає групи для перегляду
-        public void AddItemsToComboBox()
-        {
-            theme = client.GetTheme();
-            ThemeComboBox.Items.Clear();
-            if (theme.Count > 0)
-            {
-                foreach (DTOTheme item in theme)
-                {
-                    ComboBoxItem gnItem = new ComboBoxItem() { Content = item.ThemeName };
-                    ThemeComboBox.Items.Add(gnItem);
-                }
-            }
-            else
-            {
-                ComboBoxItem gnItem = new ComboBoxItem() { Content = "No Themes" };
-                ThemeComboBox.Items.Add(gnItem);
-            }
-        }
+        //public void AddItemsToComboBox()
+        //{
+        //    theme = client.GetTheme();
+        //    ThemeComboBox.Items.Clear();
+        //    if (theme.Count > 0)
+        //    {
+        //        foreach (DTOTheme item in theme)
+        //        {
+        //            ComboBoxItem gnItem = new ComboBoxItem() { Content = item.ThemeName };
+        //            ThemeComboBox.Items.Add(gnItem);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        ComboBoxItem gnItem = new ComboBoxItem() { Content = "No Themes" };
+        //        ThemeComboBox.Items.Add(gnItem);
+        //    }
+        //}
 
         public void SetListOfTest()
         {
             tests = client.GetTestsForSomeGroup();
             if (tests.Count != 0)
             {
-                testsGrid.ItemsSource = tests;
+                foreach (var item in tests)
+                {
+                    bool isAvaible = true;
+                    if (testSessions.Count != 0)
+                    {
+                        foreach (var testSession in testSessions)
+                        {
+                            if (testSession.TestId == item.TestId && testSession.StudentId == client.GetClientId())
+                            {
+                                isAvaible = false;
+                            }
+                        }
+                    }
+                    if (isAvaible)
+                    {
+                        availableTests.Add(item);
+                    }
+                }
+                testsGrid.ItemsSource = availableTests;
             }         
         }
 
@@ -88,7 +112,7 @@ namespace Client.Pages
                     {
                         int testId = ((DTO.DTOTest)((System.Windows.FrameworkElement)vis).DataContext).TestId;
                         NavigationWindow navWIN = new NavigationWindow();
-                        navWIN.Content = new StudentPassTest(client, testId, mw, this);
+                        navWIN.Content = new StudentPassTest(client, testId, mw, main,this);
                         navWIN.Show();
                         mw.Visibility = Visibility.Hidden;
                     }

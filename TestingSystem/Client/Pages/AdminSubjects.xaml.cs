@@ -1,5 +1,4 @@
-﻿using DTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DTO;
 
 namespace Client.Pages
 {
@@ -22,70 +22,72 @@ namespace Client.Pages
   public partial class AdminSubjects : Page
   {
     ClientObject client;
+    Window mw;
+    Frame main = null;
     List<DTOSubject> subjects;
-    public AdminSubjects()
+    public AdminSubjects(ClientObject cl, Window _mw, Frame _mn)
     {
       InitializeComponent();
-      AddItemsToComboBox();
+      client = cl;
+      mw = _mw;
+      main = _mn;
+      SetListOfSubjects();
+
+      Style rowStyle = new Style(typeof(DataGridRow));
+      rowStyle.Setters.Add(new EventSetter(DataGridRow.MouseDoubleClickEvent,
+                                new MouseButtonEventHandler(Row_DoubleClick)));
+      subjectsGrid.RowStyle = rowStyle;
     }
 
-    // додає subject для перегляду
-    public void AddItemsToComboBox()
+
+    public void SetListOfSubjects()
     {
-      subjects = client.GetSubjects();
-      SubjectComboBox.Items.Clear();
-      if (subjects.Count > 0)
-      {
-        foreach (DTOSubject item in subjects)
+        subjects = client.GetSubjectsForAdmin();
+        if (subjects.Count > 0)
         {
-          ComboBoxItem gnItem = new ComboBoxItem() { Content = item.SubjectName };
-          SubjectComboBox.Items.Add(gnItem);
+            subjectsGrid.ItemsSource = subjects;
         }
-      }
-      else
-      {
-        ComboBoxItem gnItem = new ComboBoxItem() { Content = "No Groups" };
-        SubjectComboBox.Items.Add(gnItem);
-      }
-
     }
 
-    // показує стрічку для вводу імені нової групи
-    private void AddButton_Click(object sender, RoutedEventArgs e)
+    public void Row_DoubleClick(object sender, MouseButtonEventArgs e)
     {
-      //if (DetailsGrid.Visibility == Visibility.Visible)
-      //{
-      //  DetailsGrid.Visibility = Visibility.Hidden;
-      //}
-      //AddGroupLabel.Visibility = Visibility.Visible;
-      //AddGroupTextBox.Visibility = Visibility.Visible;
-      //SaveButton.Visibility = Visibility.Visible;
-      //AddButton.IsEnabled = false;
+        DataGridRow row = sender as DataGridRow;
+        try
+        {
+            int subjectId = ((DTO.DTOSubject)row.DataContext).SubjectId;       
+            main.Content = new AdminThemes(client, mw, main, subjectId);
+            //NavigationWindow navWIN = new NavigationWindow();
+            //navWIN.Content = new TestDesigner(client, rowId);
+            //navWIN.Show();
+        }
+        catch (Exception exeption)
+        {
+            var ex = exeption.Message;
+        }
     }
 
-    private void DeleteButton_Click(object sender, RoutedEventArgs e)
+    private void AddSubjectButton_Click(object sender, RoutedEventArgs e)
     {
-      //if (studentsList.SelectedItem != null)
-      //{
-      //  DTOStudent student = (DTOStudent)studentsList.SelectedItem;
-      //  ComboBoxItem gnItem = new ComboBoxItem() { Content = GroupsComboBox.Text }; ;
-      //  string answer = client.DeleteStudentFromGroup(student.StudentId);
-      //  if (answer == "successfully")
-      //  {
-      //    AddItemsToComboBox();
-      //    DTOGroup group = groups.FirstOrDefault(g => g.GroupName == gnItem.Content.ToString());
-      //    List<DTOStudent> students = client.GetGroupStudents(group.GroupId);
-      //    studentsList.ItemsSource = students;
-      //  }
-      //  else
-      //  {
-      //    MessageBox.Show("Something wrong!");
-      //  }
-      //}
-      //else
-      //{
-      //  MessageBox.Show("Pleaіe select student!");
-      //}
+        main.Content = new AddSubject(client, mw, main);
+    }
+
+    private void DeleteSubject_Click(object sender, RoutedEventArgs e)
+    {
+    var dg = sender as DataGrid;
+
+    for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+        if (vis is DataGridRow)
+        {
+            if (((System.Windows.FrameworkElement)vis).DataContext is DTOSubject)
+            {
+                var subjectId = ((DTO.DTOSubject)((System.Windows.FrameworkElement)vis).DataContext).SubjectId;
+                if (subjectId != -1)
+                {
+                    client.DeleteSubject(subjectId);
+                    SetListOfSubjects();
+                }
+            }
+        }
     }
   }
 }

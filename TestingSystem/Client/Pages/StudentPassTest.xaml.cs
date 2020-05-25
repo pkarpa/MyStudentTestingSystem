@@ -19,16 +19,18 @@ namespace Client.Pages
     List<QueDTOQuestionstion> questions = null;
     List<DTOQuestionType> questionType = null;
     Window mw;
+    Frame main = null;
     DTOTestSession _testSession;
     List<DTOAnswer> _userAnswers;
     StudentTests _previousPage;
     Dictionary<int, string> answerDictionary = new Dictionary<int, string>();
 
-    public StudentPassTest(ClientObject cl, int testId, Window _mw, StudentTests previousPage)
+    public StudentPassTest(ClientObject cl, int testId, Window _mw, Frame _mn, StudentTests previousPage)
     {
       InitializeComponent();
       client = cl;
       mw = _mw;
+      main = _mn;
       _previousPage = previousPage;
       _userAnswers = new List<DTOAnswer>();
       dtoTest = client.GetTest(testId);
@@ -36,9 +38,8 @@ namespace Client.Pages
       questionType = client.GetQuestionTypes();
       _testSession = new DTOTestSession() { Status = "Continues", StartTime = DateTime.Now, TestId = testId, StudentId = cl.GetClientId() };
 
-      Thread.Sleep(1000);
+      Thread.Sleep(500);
       _testSession.TestSessionId = client.AddTestSession(_testSession);
-
 
       //IGNORE comments.
       //1. add grid with one column
@@ -178,7 +179,7 @@ namespace Client.Pages
       //add button SUBMIT
       Button buttonSubmit = new Button()
       {
-        Content = "Submit"
+        Content = "Завершити"
       };
       //< Button Content = "Button" HorizontalAlignment = "Left" Margin = "20,10,0,0" VerticalAlignment = "Top" Width = "75" Click = "Button_Click" />
       buttonSubmit.HorizontalAlignment = HorizontalAlignment.Left;
@@ -212,11 +213,12 @@ namespace Client.Pages
 
 
       List<int> answersId = client.AddStudentsAnswers(_userAnswers);
-      //_testSession.AnswersId = answersId;
+      _testSession.AnswersId = answersId;
       client.UpdateTestSession(_testSession);
       //this.DataContext = null;
       this.Visibility = Visibility.Hidden;
       //NavigationService.Navigate(_previousPage);
+      main.Content = new StudentTests(client, mw, main);
       mw.Visibility = Visibility.Visible;
     }
 

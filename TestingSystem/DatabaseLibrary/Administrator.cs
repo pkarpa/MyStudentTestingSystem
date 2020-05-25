@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace TestingSystemDatabaseLibrary
 {
    
-     [Serializable]public class Administrator
+    [Serializable]public class Administrator
     {
         public int Id { get; set; }
 

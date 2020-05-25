@@ -25,10 +25,14 @@ namespace Client.Pages
         private string login;
         private string password;
         ClientObject client;
+        Window mw;
+        Frame main = null;
         DTOAdministrator administrator = null;
-        public AdminAccount(ClientObject cl)
+        public AdminAccount(ClientObject cl, Window _mw, Frame _mn)
         {
             InitializeComponent();
+            mw = _mw;
+            main = _mn;
             client = cl;
             this.AdminInfo();
         }

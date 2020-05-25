@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DTO
 {
-  [Serializable] public class DTOTest
-    {      
+    public class TestViewModel
+    {
         public int TestId { get; set; }
 
         public string TestName { get; set; }
@@ -19,10 +22,6 @@ namespace DTO
 
         public int ThemeId { get; set; }
 
-        public ICollection<int> QuestionsId { get; set; }
-
-        public ICollection<int> GroupsId { get; set; }
-
-        public ICollection<int> TestSessionsId { get; set; }
+        public string ThemeName { get; set; }
     }
 }

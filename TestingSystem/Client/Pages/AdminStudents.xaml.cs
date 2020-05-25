@@ -25,12 +25,16 @@ namespace Client.Pages
     public partial class AdminStudentPage : Page
     {
         ClientObject client;
+        Window mw;
+        Frame main = null;
         List<DTOStudent> students = null;
         List<DTOGroup> groups = null;
 
-        public AdminStudentPage(ClientObject cl)
+        public AdminStudentPage(ClientObject cl, Window _mw, Frame _mn)
         {
             InitializeComponent();
+            mw = _mw;
+            main = _mn;
             client = cl;
             AddItemsToGroupComboBox();
 
@@ -93,6 +97,26 @@ namespace Client.Pages
             var selectGroup = groupComboBox.SelectedIndex;
             int groupId = groups[selectGroup].GroupId;
             this.SetListOfStudents(groupId);
+        }
+
+        private void ChangeStudent_Click(object sender, RoutedEventArgs e)
+        {
+            var dg = sender as DataGrid;
+
+            for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+                if (vis is DataGridRow)
+                {
+                    if (((System.Windows.FrameworkElement)vis).DataContext is DTOStudent)
+                    {
+                        var studentId = ((DTO.DTOStudent)((System.Windows.FrameworkElement)vis).DataContext).StudentId;
+                        if (studentId != -1)
+                        {
+                            DTOStudent st = students.FirstOrDefault(x => x.StudentId == studentId);
+                            main.Content = new AdminChangeStudent(client, mw, main, st);
+                        }
+                    }
+                }
+           
         }
     }
 }

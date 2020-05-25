@@ -18,35 +18,35 @@
             <RowDefinition Height="2*"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="50" Width="135" IsEnabled="False" Margin="20,25,0,20.2">Account</TextBlock>
-        <Label Content="Name:" HorizontalAlignment="Left" Margin="54,27.8,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="59" RenderTransformOrigin="0.383,0.077" Grid.Row="1"/>
-        <TextBox x:Name="AdminName" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" FontSize="16" Text="Name" VerticalAlignment="Top" Width="138" IsEnabled="False" Grid.Row="1" Margin="123,34.8,0,0" />
-        <Label Content="Login:" HorizontalAlignment="Left" Margin="59,80.8,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="59" Grid.Row="1"/>
-        <TextBox x:Name="AdminLogin" HorizontalAlignment="Left" Height="23" Margin="123,87.8,0,0" TextWrapping="Wrap" FontSize="16" Text="Login" VerticalAlignment="Top" Width="138" IsEnabled="False" Grid.Row="1"/>
-        <Label Content="Password:" HorizontalAlignment="Left" Margin="35,136.8,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="78" Grid.Row="1"/>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="50" Width="322" IsEnabled="False" Margin="20,25,0,20.2">Особистий кабінет</TextBlock>
+        <Label Content="Ім'я:" HorizontalAlignment="Left" Margin="54,27.8,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="59" RenderTransformOrigin="0.383,0.077" Grid.Row="1"/>
+        <TextBox x:Name="AdminName" HorizontalAlignment="Left" Height="23"  TextWrapping="Wrap" FontSize="16" Text="Ім'я" VerticalAlignment="Top" Width="138" IsEnabled="False" Grid.Row="1" Margin="123,34.8,0,0" />
+        <Label Content="Логін:" HorizontalAlignment="Left" Margin="59,80.8,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="59" Grid.Row="1"/>
+        <TextBox x:Name="AdminLogin" HorizontalAlignment="Left" Height="23" Margin="123,87.8,0,0" TextWrapping="Wrap" FontSize="16" Text="Логін" VerticalAlignment="Top" Width="138" IsEnabled="False" Grid.Row="1"/>
+        <Label Content="Пароль:" HorizontalAlignment="Left" Margin="35,136.8,0,0" FontSize="16" VerticalAlignment="Top" Height="30" Width="78" Grid.Row="1"/>
         <PasswordBox x:Name="AdminPassword" HorizontalAlignment="Left" Margin="123,143.8,0,0" VerticalAlignment="Top" Height="23" Width="138" IsEnabled="False" Grid.Row="1"/>
-        <Button x:Name="ChangeNameButton" Background="Blue" FontSize="12" Foreground="White" Content="Change" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="ChangeNameButton_Click" Grid.Row="1" Margin="286,32.8,0,0" HorizontalContentAlignment="Right" UseLayoutRounding="False">
+        <Button x:Name="ChangeNameButton" Background="Blue" FontSize="12" Foreground="White" Content="Змінити" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="55.8" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="ChangeNameButton_Click" Grid.Row="1" Margin="286,32.8,0,0" HorizontalContentAlignment="Right" UseLayoutRounding="False">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="8"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="ChangeLoginButton" Background="Blue" FontSize="12" Foreground="White" Content="Change" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="286,85.8,0,0" Click="ChangeLoginButton_Click" Grid.Row="1">
+        <Button x:Name="ChangeLoginButton" Background="Blue" FontSize="12" Foreground="White" Content="Змінити" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="56" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="286,85.8,0,0" Click="ChangeLoginButton_Click" Grid.Row="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="8"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <Button x:Name="ChangePasswordButton" Background="Blue" FontSize="12" Foreground="White" Content="Change" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="286,138.8,0,0" Click="ChangePasswordButton_Click" Grid.Row="1">
+        <Button x:Name="ChangePasswordButton" Background="Blue" FontSize="12" Foreground="White" Content="Змінити" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="56" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="286,138.8,0,0" Click="ChangePasswordButton_Click" Grid.Row="1">
             <Button.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="8"/>
                 </Style>
             </Button.Resources>
         </Button>
-        <CheckBox x:Name="ShowPasswordCheckBox" Content="show password" HorizontalAlignment="Left" Margin="162,171.8,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Height="15" Width="99"/>
+        <CheckBox x:Name="ShowPasswordCheckBox" Content="показати пароль" HorizontalAlignment="Left" Margin="145,171.8,0,0" Grid.Row="1" VerticalAlignment="Top" Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" Height="15" Width="116"/>
         <TextBox x:Name="AdminPasswordTextBox" HorizontalAlignment="Left" Height="23" Margin="123,143.8,0,0" TextWrapping="Wrap" Visibility="Hidden" FontSize="16" Text="Login" VerticalAlignment="Top" Width="138"  Grid.Row="1"/>
         <Button x:Name="SaveNameButton" Background="Blue" FontSize="12" Foreground="White" Content="Save" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="SaveNameButton_Click" Grid.Row="1" Margin="346.8,32.8,0,0" HorizontalContentAlignment="Center" UseLayoutRounding="False" Visibility="Hidden">
             <Button.Resources>

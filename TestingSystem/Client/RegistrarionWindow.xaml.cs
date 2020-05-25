@@ -44,7 +44,7 @@ namespace Client
             if (!isAdmin)
             {
                 isAdmin = true;
-                this.ChangeRegistrationButton.Content = "New Student";
+                this.ChangeRegistrationButton.Content = "Новий студент";
                 this.SurNameBox.Visibility = Visibility.Collapsed;
                 this.SurNameLabel.Visibility = Visibility.Collapsed;
                 this.GroupNameComboBox.Visibility = Visibility.Collapsed;
@@ -54,7 +54,7 @@ namespace Client
             else
             {
                 isAdmin = false;
-                this.ChangeRegistrationButton.Content = "New Admin";
+                this.ChangeRegistrationButton.Content = "Новий адміністратор";
                 this.SurNameBox.Visibility = Visibility.Visible;
                 this.SurNameLabel.Visibility = Visibility.Visible;
                 this.GroupNameComboBox.Visibility = Visibility.Visible;

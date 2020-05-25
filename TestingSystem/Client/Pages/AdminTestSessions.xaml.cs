@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,10 +113,10 @@ namespace Client.Pages
         }
 
         public void AddTestSessions(int testId)
-        {
-            testSessions = client.GetTestSessionsForSomeTest(testId);
-            students = client.GetStudents();
+        {      
             questions = client.GetQuestionsWithoutParams();
+            students = client.GetStudents();
+            testSessions = client.GetTestSessionsForSomeTest(testId);
             foreach (var testSession in testSessions)
             {
                 AnswerModel answerModel = new AnswerModel();
@@ -152,8 +153,13 @@ namespace Client.Pages
         {
             var testComboBox = sender as ComboBox;
             var selectTest = testComboBox.SelectedIndex;
-            int themeId = themes[selectTest].Id;
-            this.AddTestSessions(themeId);
+            int testId = tests[selectTest].TestId;
+            this.AddTestSessions(testId);
+        }
+
+        private void DeleteTestSession_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         //public void SetListOfTest()

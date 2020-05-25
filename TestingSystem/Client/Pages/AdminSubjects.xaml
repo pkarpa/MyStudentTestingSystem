@@ -6,33 +6,35 @@
       xmlns:local="clr-namespace:Client.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AdminSubjects" Background="AliceBlue">
+      Title="AdminTests" Background="AliceBlue">
+    <Grid x:Name="workGrid" Background="AliceBlue">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="3*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="0,4*"/>
         </Grid.RowDefinitions>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="36"  Height="63" Width="135" IsEnabled="False" Margin="10,3,0,10"><Run Text="Subject"/></TextBlock>
-        <Label Content="Subject:" HorizontalAlignment="Left" Margin="20,10,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="16"/>
-        <ComboBox Name="SubjectComboBox" HorizontalAlignment="Left" Margin="83,17,0,0" Grid.Row="1" VerticalAlignment="Top" Width="122" Height="25"/>
-        <Button x:Name="DeleteButton" Background="Blue" FontSize="12" Foreground="White" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="270,17,0,0" Click="DeleteButton_Click" Grid.Row="1">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="8"/>
-                </Style>
-            </Button.Resources>
-        </Button>
-        <Button x:Name="AddButton" Background="Blue" FontSize="12" Foreground="White" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="50" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="210,17,0,0" Click="AddButton_Click" Grid.Row="1">
-            <Button.Resources>
-                <Style TargetType="{x:Type Border}">
-                    <Setter Property="CornerRadius" Value="8"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Grid Grid.Row="0">
+            <Label Content="Предмети:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" FontSize="20" Height="35"/>
+            <Button x:Name="AddSubjectButton" Background="Blue" FontSize="12" Foreground="White" Content="Створити Предмет" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="115.6" Padding="3" RenderTransformOrigin="-0.158,1.863" Click="AddSubjectButton_Click" HorizontalContentAlignment="Center" UseLayoutRounding="False" Margin="644.4,5.2,0,0">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </Grid>
+        <DataGrid x:Name="subjectsGrid" Grid.Row="1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
+                RowBackground="LightGray" AlternatingRowBackground="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Назва предмету" Binding="{Binding Path=SubjectName}" Width="auto" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="DeleteSubject" Click="DeleteSubject_Click">Видалити</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Page>

@@ -10,11 +10,12 @@
 
     <Grid Background="LightCyan" Margin="0,0,-0.4,-2.4">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="145*"/>
+            <ColumnDefinition Width="269*"/>
             <ColumnDefinition Width ="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <Border BorderThickness="2" Grid.ColumnSpan="2" Margin="0,0,-0.4,2">
+        <Border BorderThickness="2" Grid.ColumnSpan="3" Margin="0,0,-0.4,2">
 
             <Border.BorderBrush>
                 <DrawingBrush Viewport="0,0,8,8" ViewportUnits="Absolute" TileMode="Tile">
@@ -45,13 +46,13 @@
                     </TextBlock.RenderTransform>
                 </TextBlock>
 
-                <Label x:Name="NameLabel" Content="Login:"  FontSize="14" Foreground="DarkCyan" Width="50" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <Label x:Name="NameLabel" Content="Логін:"  FontSize="14" Foreground="DarkCyan" Width="50" Margin="110,0,0,0" HorizontalAlignment="Left"/>
                 <TextBox x:Name="LoginBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,5" VerticalAlignment="Center" Width="190" Text="admintest@gmail.com"/>
 
-                <Label x:Name="PasswordLabel" Content="Password:"  FontSize="14" Foreground="DarkCyan" Width="76" Margin="110,0,0,0" HorizontalAlignment="Left"/>
+                <Label x:Name="PasswordLabel" Content="Пароль:"  FontSize="14" Foreground="DarkCyan" Width="76" Margin="110,0,0,0" HorizontalAlignment="Left"/>
                 <PasswordBox x:Name="PasswordBox" FontSize="14" Foreground="DarkCyan" HorizontalAlignment="Center" Height="28" Padding="20,1,20,0" Margin="80,0,80,40" VerticalAlignment="Center" Width="190" Password="sasasa"/>
 
-                <Button x:Name="LoginButton" Background="Blue" FontSize="14" Foreground="White" Content="Log in" HorizontalAlignment="Center" VerticalAlignment="Center" Height="28" Width="190" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,10,90,20" Click="LoginButton_Click">
+                <Button x:Name="LoginButton" Background="Blue" FontSize="14" Foreground="White" Content="Вхід" HorizontalAlignment="Center" VerticalAlignment="Center" Height="28" Width="190" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,10,90,20" Click="LoginButton_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="8"/>
@@ -59,7 +60,7 @@
                     </Button.Resources>
                 </Button>
 
-                <Button x:Name="RegistrateButton" Background="Blue" FontSize="14" Foreground="White" Content="Registrate" HorizontalAlignment="Center" VerticalAlignment="Center" Width="190" Height="28" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,0" Click="RegistrateButton_Click">
+                <Button x:Name="RegistrateButton" Background="Blue" FontSize="14" Foreground="White" Content="Реєстрація" HorizontalAlignment="Center" VerticalAlignment="Center" Width="190" Height="28" Padding="3" RenderTransformOrigin="-0.158,1.863" Margin="90,0" Click="RegistrateButton_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="8"/>
