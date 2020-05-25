@@ -118,11 +118,11 @@ namespace TestingSystemServer
               break;
             case "GetGroupTests":
               GetGroupTests();
-              Console.WriteLine(this.ClientObjectId + ": GetGroupStudents");
+              Console.WriteLine(this.ClientObjectId + ": GetGroupTests");
               break;
             case "GetAllTests":
               GetAllTests();
-              Console.WriteLine(this.ClientObjectId + ": GetGroupStudents");
+              Console.WriteLine(this.ClientObjectId + ": GetAllTests");
               break;
             case "DeleteStudentFromGroup":
               DeleteStudentFromGroup(message[1]);
@@ -133,37 +133,35 @@ namespace TestingSystemServer
               Console.WriteLine(this.ClientObjectId + ": InfoAboutStudent");
               break;
             case "GetTestsForSomeGroup":
-                GetTestsForSomeGroup(message[1]);
-                Console.WriteLine(this.ClientObjectId + ": GetTestsForSomeGroup");
-                break;
+              GetTestsForSomeGroup(message[1]);
+              Console.WriteLine(this.ClientObjectId + ": GetTestsForSomeGroup");
+              break;
             case "GetTest":
-                GetTest(message[1]);
-                Console.WriteLine(this.ClientObjectId + ": GetTest");
-                break;              
+              GetTest(message[1]);
+              Console.WriteLine(this.ClientObjectId + ": GetTest");
+              break;
             case "GetThemesForSubject":
-                GetThemesForSubject(message[1]);
-                Console.WriteLine(this.ClientObjectId + ": GetThemesForSubject");
-                break; 
+              GetThemesForSubject(message[1]);
+              Console.WriteLine(this.ClientObjectId + ": GetThemesForSubject");
+              break;
             case "GetTestsForTheme":
-                GetTestsForTheme(message[1]);
-                Console.WriteLine(this.ClientObjectId + ": GetTestsForTheme");
-                break; 
+              GetTestsForTheme(message[1]);
+              Console.WriteLine(this.ClientObjectId + ": GetTestsForTheme");
+              break;
             case "GetSubjectsForAdmin":
-                GetSubjectsForAdmin(message[1]);
-                Console.WriteLine(this.ClientObjectId + ": GetSubjectsForAdmin");
-                break;
+              GetSubjectsForAdmin(message[1]);
+              Console.WriteLine(this.ClientObjectId + ": GetSubjectsForAdmin");
+              break;
             case "AddTestSession":
-                AddTestSession();
-                Console.WriteLine(this.ClientObjectId + ": AddTestSession");
-                break;
+              AddTestSession();
+              Console.WriteLine(this.ClientObjectId + ": AddTestSession");
+              break;
             case "AddStudentsAnswers":
-                AddStudentsAnswers();
-                Console.WriteLine(this.ClientObjectId + ": AddStudentsAnswers");
-                break;
+              AddStudentsAnswers();
+              Console.WriteLine(this.ClientObjectId + ": AddStudentsAnswers");
+              break;
             case "UpdateTestSession":
-                UpdateTestSession();
-                Console.WriteLine(this.ClientObjectId + ": UpdateTestSession");
-                break; 
+                break;
             case "GetTestSessionsForSomeTest":
                 GetTestSessionsForSomeTest(message[1]);
                 Console.WriteLine(this.ClientObjectId + ": GetTestSessionsForSomeTest");
@@ -319,99 +317,105 @@ namespace TestingSystemServer
 
     private void AddTestSession()
     {
-        var obj = RecieveObject();
-        int testSessionId = -1;
-        if (obj is DTOTestSession)
+      var obj = RecieveObject();
+      if (obj is DTOTestSession)
+      {
+        DTOTestSession dtoTestSession = obj as DTOTestSession;
+        using (var db = new TestingSystemDBContext())
         {
-            DTOTestSession dtoTestSession = obj as DTOTestSession;
-            using (var db = new TestingSystemDBContext())
-            {
-                Student student = db.Students.Include(x => x.Group).Include(d=>d.TestSessions).FirstOrDefault(s => s.StudentId == dtoTestSession.StudentId);
-                Test test = db.Tests.Include(x => x.Groups).Include(c=>c.Questions).Include(p=>p.Theme).FirstOrDefault(t => t.TestId == dtoTestSession.TestId);
-                TestSession testSession = new TestSession() { StartTime = dtoTestSession.StartTime, EndTime = DateTime.Today, Status = dtoTestSession.Status, Student = student, Test = test, Answers = null};
-                db.TestSessions.Add(testSession);
-                testSessionId = testSession.TestSessionId;
-                string answer = testSessionId.ToString();
-                SendMessage(answer);
-                db.SaveChanges();              
-            }
+          Student student = db.Students.Include(x => x.Group).Include(d => d.TestSessions).FirstOrDefault(s => s.StudentId == dtoTestSession.StudentId);
+          Test test = db.Tests.Include(x => x.Groups).Include(c => c.Questions).Include(p => p.Theme).FirstOrDefault(k => k.TestId == dtoTestSession.TestId);
+          TestSession testSession = new TestSession() { StartTime = dtoTestSession.StartTime, EndTime = DateTime.Today, Status = dtoTestSession.Status, Student = student, Test = test, Answers = null };
+          db.TestSessions.Add(testSession);
+          db.SaveChanges();
+          //db.Entry(db.TestSessions).GetDatabaseValues();
+          //var t = db.Entry(testSession);
+          string answer = testSession.TestSessionId.ToString();
+          SendMessage(answer);
         }
-        else 
-        {
-            Console.WriteLine("Something wrong with adding new test session!");
-        }
+      }
+      else
+      {
+        Console.WriteLine("Something wrong with adding new test session!");
+      }
     }
 
     private void AddStudentsAnswers()
     {
-        var obj = RecieveObject();
-        if (obj is List<DTOAnswer>)
+      var obj = RecieveObject();
+      if (obj is List<DTOAnswer>)
+      {
+        List<DTOAnswer> dtoAnswers = obj as List<DTOAnswer>;
+        List<Answer> answers = new List<Answer>();
+        string message = null;
+        using (var db = new TestingSystemDBContext())
         {
-            List<DTOAnswer> dtoAnswers = obj as List<DTOAnswer>;
-            List<Answer> answers = new List<Answer>();
-            string message = null;
-            using (var db = new TestingSystemDBContext())
+          foreach (var item in dtoAnswers)
+          {
+            Question question = db.Questions.FirstOrDefault(q => q.Id == item.QuestionId);
+            TestSession testSession = db.TestSessions.FirstOrDefault(s => s.TestSessionId == item.TestSessionId);
+            Answer answer = new Answer() { AnswerText = item.AnswerText, AnswerCorrects = item.AnswerCorrects, Question = question, TestSession = testSession };
+            answers.Add(answer);
+          }
+          db.Answers.AddRange(answers);
+          db.SaveChanges();
+          foreach (var answer in answers)
+          {
+            if (string.IsNullOrEmpty(message))
             {
-                foreach (var item in dtoAnswers)
-                {
-                    Question question = db.Questions.FirstOrDefault(q => q.Id == item.QuestionId);
-                    TestSession testSession = db.TestSessions.FirstOrDefault(s => s.TestSessionId == item.TestSessionId);
-                    Answer answer = new Answer() { AnswerText = item.AnswerText, AnswerCorrects = item.AnswerCorrects, Question = question, TestSession = testSession };
-                    answers.Add(answer);
-                }
-                db.Answers.AddRange(answers);
-                foreach (var i in answers)
-                {
-                    message += i.AnswerId + " ";
-                }
-                db.SaveChanges();
-                SendMessage(message);
+              message = answer.AnswerId.ToString();
+            } else
+            {
+              message += " " + answer.AnswerId;
             }
+          }
+          SendMessage(message);
         }
-        else
-        {
-            Console.WriteLine("Something wrong with adding answers on test session!");
-        }
+      }
+      else
+      {
+        Console.WriteLine("Something wrong with adding answers on test session!");
+      }
     }
 
     private void UpdateTestSession()
     {
-        var obj = RecieveObject();
-        if (obj is DTOTestSession)
+      var obj = RecieveObject();
+      if (obj is DTOTestSession)
+      {
+        DTOTestSession dtoTestSession = obj as DTOTestSession;
+        List<Answer> answers = new List<Answer>();
+        using (var db = new TestingSystemDBContext())
         {
-            DTOTestSession dtoTestSession = obj as DTOTestSession;
-            List<Answer> answers = new List<Answer>();
-            using (var db = new TestingSystemDBContext())
-            {
-                    foreach (var i in dtoTestSession.AnswersId)
-                    {
-                        Answer answer = db.Answers.FirstOrDefault(a => a.AnswerId == i);
-                        answers.Add(answer);
-                    }
-                TestSession testSession = db.TestSessions.FirstOrDefault(t => t.TestSessionId == dtoTestSession.TestSessionId);
-                testSession.Status = dtoTestSession.Status;
-                testSession.EndTime = dtoTestSession.EndTime;
-                testSession.Answers = answers;
-                db.SaveChanges();
-            }
+          foreach (var i in dtoTestSession.AnswersId)
+          {
+            Answer answer = db.Answers.FirstOrDefault(a => a.AnswerId == i);
+            answers.Add(answer);
+          }
+          TestSession testSession = db.TestSessions.FirstOrDefault(t => t.TestSessionId == dtoTestSession.TestSessionId);
+          testSession.Status = dtoTestSession.Status;
+          testSession.EndTime = dtoTestSession.EndTime;
+          testSession.Answers = answers;
+          db.SaveChanges();
         }
-        else
-        {
-            Console.WriteLine("Something wrong with update test session!");
-        }
+      }
+      else
+      {
+        Console.WriteLine("Something wrong with update test session!");
+      }
     }
 
     private void GetTest(string mess)
     {
-        int testId = int.Parse(mess);
-        DTOTest dtoTest = null;
-        using (var db = new TestingSystemDBContext())
-        {
-            Test test = db.Tests.Include(x => x.Theme).FirstOrDefault(t => t.TestId == testId);
-            dtoTest = new DTOTest { TestId = test.TestId, TestName = test.TestName, TestTime = test.TestTime, MixAnswersOrder = test.MixAnswersOrder, MixQuestionsOrder = test.MixQuestionsOrder, TestCountScores = test.TestCountScores, ThemeId = test.Theme.Id };
-        }
+      int testId = int.Parse(mess);
+      DTOTest dtoTest = null;
+      using (var db = new TestingSystemDBContext())
+      {
+        Test test = db.Tests.Include(x => x.Theme).FirstOrDefault(t => t.TestId == testId);
+        dtoTest = new DTOTest { TestId = test.TestId, TestName = test.TestName, TestTime = test.TestTime, MixAnswersOrder = test.MixAnswersOrder, MixQuestionsOrder = test.MixQuestionsOrder, TestCountScores = test.TestCountScores, ThemeId = test.Theme.Id };
+      }
 
-        SendObject(dtoTest);
+      SendObject(dtoTest);
     }
 
     private void GetStudents()
@@ -493,61 +497,66 @@ namespace TestingSystemServer
 
     private void GetSubjectsForAdmin(string mess)
     {
-        List<DTOSubject> subjects = new List<DTOSubject>();
-        using (var db = new TestingSystemDBContext())
+      List<DTOSubject> subjects = new List<DTOSubject>();
+      using (var db = new TestingSystemDBContext())
+      {
+        int adminId = int.Parse(mess);
+        var subjectDB = db.Subjects.Include(a => a.Admin).ToList();
+        foreach (var subjectItem in subjectDB)
         {
-            int adminId = int.Parse(mess);
-            var subjectDB = db.Subjects.Include(a => a.Admin).ToList();
-            foreach (var subjectItem in subjectDB)
+          if (subjectItem.Admin.Id == adminId)
+          {
+            DTOSubject dtoSubject = new DTOSubject
             {
-                if (subjectItem.Admin.Id == adminId)
-                {
-                    DTOSubject dtoSubject = new DTOSubject
-                    {
-                        SubjectId = subjectItem.SubjectId,
-                        SubjectName = subjectItem.SubjectName
-                    };
-                    subjects.Add(dtoSubject);
-                }    
-            }
-            SendObject(subjects);
+              SubjectId = subjectItem.SubjectId,
+              SubjectName = subjectItem.SubjectName
+            };
+            subjects.Add(dtoSubject);
+          }
         }
+        SendObject(subjects);
+      }
     }
 
     private void GetThemesForSubject(string mess)
     {
-        List<DTOTheme> themes = new List<DTOTheme>();
-        using (var db = new TestingSystemDBContext())
+      List<DTOTheme> themes = new List<DTOTheme>();
+      using (var db = new TestingSystemDBContext())
+      {
+        int subjectId = int.Parse(mess);
+        var themeDB = db.Themes.Include(x => x.Subject).ToList();
+        foreach (var themeItem in themeDB)
         {
-            int subjectId = int.Parse(mess);
-            var themeDB = db.Themes.Include(x => x.Subject).ToList();
-            foreach (var themeItem in themeDB)
+          if (themeItem.Subject.SubjectId == subjectId)
+          {
+            DTOTheme dtoTheme = new DTOTheme
             {
-                if (themeItem.Subject.SubjectId == subjectId)
-                {
-                    DTOTheme dtoTheme = new DTOTheme
-                    {
-                        Id = themeItem.Id,
-                        SubjectId = subjectId,
-                        ThemeName = themeItem.ThemeName
-                    };
-                    themes.Add(dtoTheme);
-                }
-            }
-            SendObject(themes);
+              Id = themeItem.Id,
+              SubjectId = subjectId,
+              ThemeName = themeItem.ThemeName
+            };
+            themes.Add(dtoTheme);
+          }
         }
+        SendObject(themes);
+      }
     }
-        
+
 
     private void GetTestsForTheme(string mess)
     {
-        List<DTOTest> tests = new List<DTOTest>();
-        using (var db = new TestingSystemDBContext())
+      List<DTOTest> tests = new List<DTOTest>();
+      using (var db = new TestingSystemDBContext())
+      {
+        int testId = int.Parse(mess);
+        var testDB = db.Tests.Include(x => x.Theme).ToList();
+        var testSessionDB = db.TestSessions.Include(x => x.Test).ToList();
+        foreach (var testItem in testDB)
         {
-            int testId = int.Parse(mess);
-            var testDB = db.Tests.Include(x => x.Theme).ToList();
-            var testSessionDB = db.TestSessions.Include(x => x.Test).ToList();
-            foreach (var testItem in testDB)
+          List<int> testSessionsId = new List<int>();
+          foreach (var testSession in testSessionDB)
+          {
+            if (testSession.Test.TestId == testItem.TestId)
             {
                 List<int> testSessionsId = new List<int>();
                 foreach (var testSession in testSessionDB)
@@ -558,27 +567,27 @@ namespace TestingSystemServer
                     }
                 }
 
-                if (testItem.Theme.Id == testId)
-                {
-                    DTOTest dtoTest = new DTOTest
-                    {
-                        TestId = testItem.TestId,
-                        TestName = testItem.TestName,
-                        MixAnswersOrder = testItem.MixAnswersOrder,
-                        MixQuestionsOrder = testItem.MixQuestionsOrder,
-                        TestCountScores = testItem.TestCountScores,
-                        TestTime = testItem.TestTime,
-                        ThemeId = testItem.Theme.Id,
-                        TestSessionsId = testSessionsId
-                    };
-                    tests.Add(dtoTest);
-                }
-            }
-            SendObject(tests);
+          if (testItem.Theme.Id == testId)
+          {
+            DTOTest dtoTest = new DTOTest
+            {
+              TestId = testItem.TestId,
+              TestName = testItem.TestName,
+              MixAnswersOrder = testItem.MixAnswersOrder,
+              MixQuestionsOrder = testItem.MixQuestionsOrder,
+              TestCountScores = testItem.TestCountScores,
+              TestTime = testItem.TestTime,
+              ThemeId = testItem.Theme.Id,
+              TestSessionsId = testSessionsId
+            };
+            tests.Add(dtoTest);
+          }
         }
+        SendObject(tests);
+      }
     }
-        // Реєстрація нового адміністратора
-        private void AdminRegistration()
+    // Реєстрація нового адміністратора
+    private void AdminRegistration()
     {
       var obj = RecieveObject(); // отримуємо об'єкт адміністратора з клієнтської частини 
 
@@ -692,22 +701,22 @@ namespace TestingSystemServer
 
     private void GetTheme()
     {
-        List<DTOTheme> theme = new List<DTOTheme>();
-        using (var db = new TestingSystemDBContext())
+      List<DTOTheme> theme = new List<DTOTheme>();
+      using (var db = new TestingSystemDBContext())
+      {
+        var themeDB = db.Themes.Include(g => g.Subject).ToList();
+        foreach (var themeItem in themeDB)
         {
-          var themeDB = db.Themes.Include(g => g.Subject).ToList();
-          foreach (var themeItem in themeDB)
+          DTOTheme dtoTheme = new DTOTheme
           {
-            DTOTheme dtoTheme = new DTOTheme
-            {
-              SubjectId = themeItem.Subject.SubjectId,
-              ThemeName = themeItem.ThemeName
-            };
-            theme.Add(dtoTheme);
-          }
-
-          SendObject(theme);
+            SubjectId = themeItem.Subject.SubjectId,
+            ThemeName = themeItem.ThemeName
+          };
+          theme.Add(dtoTheme);
         }
+
+        SendObject(theme);
+      }
     }
 
 
@@ -774,7 +783,7 @@ namespace TestingSystemServer
       catch (Exception e)
       {
       }
-        SendObject(result);
+      SendObject(result);
     }
 
     private void UpdateQuestion(string testId)
@@ -870,27 +879,27 @@ namespace TestingSystemServer
 
     public void GetTestsForSomeGroup(string mess)
     {
-        int studentId = int.Parse(mess);
-        List<DTOTest> testsDto = new List<DTOTest>(); // Список тестів
-        using (var db = new TestingSystemDBContext())
+      int studentId = int.Parse(mess);
+      List<DTOTest> testsDto = new List<DTOTest>(); // Список тестів
+      using (var db = new TestingSystemDBContext())
+      {
+        Group group = db.Students.Include(g => g.Group).FirstOrDefault(s => s.StudentId == studentId).Group;
+        List<Test> tests = db.Tests.Include(g => g.Groups).Include(t => t.Theme).ToList();
+        foreach (var test in tests)
         {
-            Group group = db.Students.Include(g => g.Group).FirstOrDefault(s => s.StudentId == studentId).Group;
-            List<Test> tests = db.Tests.Include(g => g.Groups).Include(t => t.Theme).ToList();
-            foreach (var test in tests)
-            {
-                if (test.Groups.Contains(group))
-                {
-                    DTOTest dtoTest = new DTOTest { TestId = test.TestId, TestName = test.TestName, TestTime = test.TestTime, MixAnswersOrder = test.MixAnswersOrder, MixQuestionsOrder = test.MixQuestionsOrder, TestCountScores = test.TestCountScores, ThemeId = test.Theme.Id }; // Створюємо об'єкт теста для надсилання
-                    testsDto.Add(dtoTest); // Додаємо тест до списку 
-                }
-            }
+          if (test.Groups.Contains(group))
+          {
+            DTOTest dtoTest = new DTOTest { TestId = test.TestId, TestName = test.TestName, TestTime = test.TestTime, MixAnswersOrder = test.MixAnswersOrder, MixQuestionsOrder = test.MixQuestionsOrder, TestCountScores = test.TestCountScores, ThemeId = test.Theme.Id }; // Створюємо об'єкт теста для надсилання
+            testsDto.Add(dtoTest); // Додаємо тест до списку 
+          }
         }
-        SendObject(testsDto); // Надсилаємо список тестів на клієнтську частину        
+      }
+      SendObject(testsDto); // Надсилаємо список тестів на клієнтську частину        
     }
 
 
-        // Метод який повертає інформацію про певного адміністратора
-        private void InfoAboutAdmin(string mess)
+    // Метод який повертає інформацію про певного адміністратора
+    private void InfoAboutAdmin(string mess)
     {
       int adminId = int.Parse(mess); // отримуємо id адміністратора з повідомлення
       using (var db = new TestingSystemDBContext())
