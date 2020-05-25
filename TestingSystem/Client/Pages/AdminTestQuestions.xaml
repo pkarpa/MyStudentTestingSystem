@@ -23,14 +23,21 @@
             </Button>
         </Grid>
         <DataGrid x:Name="testsGrid" Grid.Row="1" AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                RowBackground="LightGray" AlternatingRowBackground="White">
+                RowBackground="LightGray" AlternatingRowBackground="White" CanUserDeleteRows="True" ItemsSource="{Binding}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Текст питання: " Binding="{Binding Path=QuestionText, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
-                <DataGridTextColumn Header="Варіанти відповіді через ';'" Binding="{Binding Path=AnswerOption, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
-                <DataGridTextColumn Header="Світлина" Binding="{Binding Path=QuestionImage, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
-                <DataGridTextColumn Header="Вартість питання" Binding="{Binding Path=QuestionCountScores, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
-                <DataGridTextColumn Header="Правильна відповідь" Binding="{Binding Path=QuestionAnswer, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
-                <DataGridTextColumn Header="Тип питання" Binding="{Binding Path=QuestionTypeId, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Текст питання: " Binding="{Binding Path=QuestionText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Варіанти відповіді через ';'" Binding="{Binding Path=AnswerOption, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Світлина" Binding="{Binding Path=QuestionImage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Вартість питання" Binding="{Binding Path=QuestionCountScores, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Правильна відповідь" Binding="{Binding Path=QuestionAnswer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTextColumn Header="Тип питання" Binding="{Binding Path=QuestionTypeId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="auto" />
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="SaveQuestion" Click="SaveQuestion_Click">Зберегти</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

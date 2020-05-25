@@ -29,6 +29,7 @@ namespace Client.Pages
         Frame main = null;
         List<DTOStudent> students = null;
         List<DTOGroup> groups = null;
+        int _currentGroupId;
 
         public AdminStudentPage(ClientObject cl, Window _mw, Frame _mn)
         {
@@ -97,6 +98,7 @@ namespace Client.Pages
             var selectGroup = groupComboBox.SelectedIndex;
             int groupId = groups[selectGroup].GroupId;
             this.SetListOfStudents(groupId);
+            _currentGroupId = groupId;
         }
 
         private void ChangeStudent_Click(object sender, RoutedEventArgs e)
@@ -118,5 +120,27 @@ namespace Client.Pages
                 }
            
         }
-    }
+
+        private void DeleteStudent_Click(object sender, RoutedEventArgs e)
+        {
+          var dg = sender as DataGrid;
+
+          for (var vis = sender as Visual; vis != null; vis = VisualTreeHelper.GetParent(vis) as Visual)
+            if (vis is DataGridRow)
+            {
+              if (((System.Windows.FrameworkElement)vis).DataContext is DTOStudent)
+              {
+                var studentId = ((DTO.DTOStudent)((System.Windows.FrameworkElement)vis).DataContext).StudentId;
+                if (studentId != -1)
+                {
+                  client.DeleteStudent(studentId);
+                  List<DTOStudent> students = client.GetGroupStudents(_currentGroupId);
+                  if (students.Count != 0)
+                    StudentsGrid.ItemsSource = students;
+                }
+              }
+            }
+
+        }
+  }
 }

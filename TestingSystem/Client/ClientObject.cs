@@ -513,6 +513,15 @@ namespace Client
       return result;
     }
 
+    public void DeleteQuestion(int questionId)
+    {
+      string message = "DeleteQuestion:";
+      SendMessage(message); // надсилаємо повідомлення на серверну частину для отримання 
+      Thread.Sleep(700);
+      SendObject(questionId); // надсилаємо список id тестів групи
+      Thread.Sleep(700);
+    }
+
     public void UpdateTestSession(DTOTestSession _testSession)
     {
         string message = "UpdateTestSession:";
@@ -668,6 +677,15 @@ namespace Client
          Thread.Sleep(700);
          string answer = RecieveMessages();
          return answer;
+    }
+
+    public void DeleteStudent(int studentId)
+    {
+      string message = "DeleteStudent:";
+      SendMessage(message);
+      Thread.Sleep(700);
+      SendObject(studentId);
+      Thread.Sleep(700);
     }
 
     public string AddTestToGroup(int testId, int groupId)

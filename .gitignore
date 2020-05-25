@@ -66,3 +66,5 @@ ChangeUserPassword.g.cs
 ChangeUserPassword.g.i.cs
 obj
 bin
+.vs
+.idea
